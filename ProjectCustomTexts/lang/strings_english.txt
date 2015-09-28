@@ -1,0 +1,53 @@
+<?php
+
+$s_plugin_ProjectCustomTexts_manage_CPT = 'Manage PrTxt';
+
+$s_plugin_ProjectCustomTexts_manage_config_title = 'Manage project configuration';
+$s_plugin_ProjectCustomTexts_manage_text_title = 'Manage texts';
+$s_plugin_ProjectCustomTexts_manage_preferences_title = 'Preferences';
+
+$s_plugin_ProjectCustomTexts_enabled = 'Enabled';
+$s_plugin_ProjectCustomTexts_all_projects_config =  'General configuration (all projects)';
+$s_plugin_ProjectCustomTexts_projects_config =  'Poject configuration';
+$s_plugin_ProjectCustomTexts_project_name =  'Project';
+$s_plugin_ProjectCustomTexts_show_allpr =  'Show global text';
+$s_plugin_ProjectCustomTexts_show_custom =  'Show predefined text';
+$s_plugin_ProjectCustomTexts_predefined_text =  'Predefined text';
+$s_plugin_ProjectCustomTexts_delete_selection =  'Delete selection';
+$s_plugin_ProjectCustomTexts_update_button =  'Update preferences';
+$s_plugin_ProjectCustomTexts_delete_button =  'Delete';
+$s_plugin_ProjectCustomTexts_add_projects = 'Add projects';
+$s_plugin_ProjectCustomTexts_projects_without_config = 'Projects available';
+$s_plugin_ProjectCustomTexts_add_projects_button = 'Add selection';
+$s_plugin_ProjectCustomTexts_ensure_delete_projects = 'Are you sure you wish to remove configuration for selected projects?';
+
+$s_plugin_ProjectCustomTexts_manage_predefined_texts = 'Manage predefined texts';
+$s_plugin_ProjectCustomTexts_name = 'Name';
+$s_plugin_ProjectCustomTexts_description = 'Description';
+$s_plugin_ProjectCustomTexts_languages = 'Languages';
+$s_plugin_ProjectCustomTexts_created_by = 'Created by';
+$s_plugin_ProjectCustomTexts_action = 'Action';
+$s_plugin_ProjectCustomTexts_edit = 'Edit';
+$s_plugin_ProjectCustomTexts_new_txt = 'Create text';
+$s_plugin_ProjectCustomTexts_ensure_delete_text = 'Are you sure you wish to remove this text?';
+
+$s_plugin_ProjectCustomTexts_edit_predefined_text = 'Edit predefined text';
+$s_plugin_ProjectCustomTexts_contents = 'Contents';
+$s_plugin_ProjectCustomTexts_default = 'default';
+$s_plugin_ProjectCustomTexts_fallback = 'fallback';
+$s_plugin_ProjectCustomTexts_add_lang_button = 'Add language';
+$s_plugin_ProjectCustomTexts_save = 'Save';
+
+$s_plugin_ProjectCustomTexts_permissions_config = 'Permissions configuration';
+$s_plugin_ProjectCustomTexts_configure_all_projects = 'Configure all projects';
+$s_plugin_ProjectCustomTexts_configure_own_projects = 'Configure only own projects';
+$s_plugin_ProjectCustomTexts_edit_all_texts = 'Edit all texts';
+$s_plugin_ProjectCustomTexts_edit_own_texts = 'Edit only own texts';
+$s_plugin_ProjectCustomTexts_saved_configurations = 'Saved configuration';
+$s_plugin_ProjectCustomTexts_reset_default_permissions = 'Reset permimssions';
+$s_plugin_ProjectCustomTexts_reset_default_permissions_txt = 'Reset permission configuration to the default settings';
+$s_plugin_ProjectCustomTexts_delete_all_configuration = 'Delete all configuration';
+$s_plugin_ProjectCustomTexts_delete_all_configuration_txt = 'Deletes all configurations on permissions, projects and texts';
+
+
+?>
