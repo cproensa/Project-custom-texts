@@ -1,4 +1,5 @@
 <?php
+/*
 // Needed for MantisBT 1.2.x.
 // Not needed for MantisBT 1.3.x
 require_once( config_get( 'class_path' ) . 'MantisPlugin.class.php' );
@@ -7,12 +8,6 @@ require_once( config_get( 'class_path' ) . 'MantisPlugin.class.php' );
 // Included for compatibility with 1.2.x
 if ( !function_exists( 'plugin_require_api' ) )
 {
-	/**
-	 * Allows a plugin page to require a plugin-specific API
-	 * @param string $p_file     The API to be included.
-	 * @param string $p_basename Plugin's basename (defaults to current plugin).
-	 * @return void
-	 */
 	function plugin_require_api( $p_file, $p_basename = null ) {
 		if( is_null( $p_basename ) ) {
 			$t_current = plugin_get_current();
@@ -30,12 +25,6 @@ if ( !function_exists( 'plugin_require_api' ) )
 // Included for compatibility with 1.2.x
 if ( !function_exists( 'require_api' ) )
 {
-	/**
-	 * Define an API inclusion function to replace require_once
-	 *
-	 * @param string $p_api_name An API file name.
-	 * @return void
-	 */
 	function require_api( $p_api_name ) {
 		static $s_api_included;
 		global $g_core_path;
@@ -50,7 +39,7 @@ if ( !function_exists( 'require_api' ) )
 	}
 }
 
-
+*/
 
 
 class ProjectCustomTextsPlugin extends MantisPlugin {
@@ -62,8 +51,9 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
      */
 
         function register() {
+            plugin_require_api( 'core/helper.php' );
                 $this->name = 'ProjectCustomTexts';    # Proper name of plugin
-                $this->description = 'ProjectCustomTexts';    # Short description of the plugin
+                $this->description = 'Manage Custom Texts for projects';    # Short description of the plugin
                 $this->page = 'manage_config';           # Default plugin page
                 
                 $this->version = '1.0';     # Plugin version string
@@ -71,14 +61,13 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
                     'MantisCore' => '1.3.0',  #   Should always depend on an appropriate version of MantisBT
                     );
                 
-                $this->author = 'carlos proensa';         # Author/team name
+                $this->author = 'Carlos Proensa';         # Author/team name
                 $this->contact = '';        # Author/team e-mail address
                 $this->url = '';            # Support webpage
         }
      
 
         function config() {
-            plugin_require_api( 'core/helper.php' );
                 return CPT_get_defaults();
             }        
         

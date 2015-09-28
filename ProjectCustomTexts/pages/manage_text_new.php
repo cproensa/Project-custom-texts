@@ -8,12 +8,12 @@ form_security_validate( 'CPT_manage_text_new' );
 $f_name = gpc_get( 'newtxt_name' );
 
 if( null === $f_name || $f_name === '' ){
-    error_parameters( plugin_lang_get( 'name') );
-    trigger_error( ERROR_EMPTY_FIELD, ERROR );
+	error_parameters( plugin_lang_get( 'name') );
+	trigger_error( ERROR_EMPTY_FIELD, ERROR );
 }
 if( CPT_text_name_exists( $f_name ) ) {
-    error_parameters( plugin_lang_get( 'name') );
-    trigger_error( ERROR_CUSTOM_FIELD_NAME_NOT_UNIQUE, ERROR );     
+	error_parameters( plugin_lang_get( 'name') );
+	trigger_error( ERROR_CUSTOM_FIELD_NAME_NOT_UNIQUE, ERROR );
 }
 
 $t_textobj = new CPT_Text();
