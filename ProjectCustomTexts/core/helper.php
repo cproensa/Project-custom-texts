@@ -1,28 +1,53 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Class to encapsulate a TExt object
  */
 
-class CPT_Text {    
+class CPT_Text {
+	/**
+	 * @var string
+	 */
 	public $name;
+	/**
+	 * @var string
+	 */
 	public $description;
+	/**
+	 * @var integer
+	 */
 	public $user;
+	/**
+	 * @var array Array of (language => string)
+	 */
 	public $contents;
 
-	public function CPT_Text( $p_data ) {
+	/**
+	* Constrcutor
+	* @param array $p_data Text data
+	*/
+	public function __construct( array $p_data = null ) {
 		$this->name = $p_data['name'];
 		$this->description = $p_data['description'];
 		$this->user = $p_data['user'];
 		$this->contents = $p_data['contents'];
 	}
 
+	/**
+	* Returns an array of the languages which have content defined
+	* @return array
+	*/
 	public function get_langs() {
 		return array_keys( $this->contents );
 	}
 
+	/**
+	 * Returns text content for specified language. If none use current lang
+	 * If no text is found for language, return text for fallback language
+	 * @global type $g_active_language
+	 * @param string $p_lang
+	 * @return type
+	 */
 	public function get_localized_txt( $p_lang= null ) {
 		global $g_active_language;
 		if( !$p_lang ) {
@@ -35,17 +60,34 @@ class CPT_Text {
 	}
 }
 
+/**
+ * Checks if a Text of given name already exists
+ * @param type $p_name	name of text
+ * @param type $p_project_id	*not implemented*
+ * @return type
+ */
 function CPT_text_name_exists( $p_name, $p_project_id = ALL_PROJECTS ) {
 	$t_all = plugin_config_get( 'CPT_texts', array(), ALL_USERS, $p_project_id );
 	return isset( $t_all[$p_name] );
 }
 
-function CPT_get_all_texts( $p_project_id ) {
-	return plugin_config_get( 'CPT_texts', array(), ALL_USERS, $p_project_id );
+/**
+ * Returns an array of all Text objects stored in db
+ * @return array Array of Text objects (as array)
+ */
+function CPT_get_all_texts( ) {
+	return plugin_config_get( 'CPT_texts', array(), ALL_USERS, ALL_PROJECTS );
 }
 
+/**
+ * Creates html option list for all text stored in db
+ * @param integer	$p_project_id	project id refered, for indexing names
+ * @param bool		$include_none	TRUE if a "none" selection muyst be included
+ * @param string	$defaulted		match to get defaulted option
+ * @return string
+ */
 function CPT_get_alltext_option_list( $p_project_id, $include_none = TRUE, $defaulted = null) {
-	$t_all = plugin_config_get( 'CPT_texts', array(), ALL_USERS, ALL_PROJECTS );
+	$t_all = CPT_get_all_texts( );
 	$str ='<select name="sel_txt[' . $p_project_id . ']">';
 	if( $include_none ) {
 		$str .= '<option value="">[' . lang_get( 'none' ) . ']</option>';
@@ -59,8 +101,13 @@ function CPT_get_alltext_option_list( $p_project_id, $include_none = TRUE, $defa
 	return $str;
 }
 
-function CPT_text_load( $p_name, $p_project_id ) {
-	$t_all = plugin_config_get( 'CPT_texts', array(), ALL_USERS, $p_project_id );
+/**
+ * Retrieves a text object by name from db
+ * @param string $p_name	Name of text
+ * @return \CPT_Text
+ */
+function CPT_text_load( $p_name ) {
+	$t_all = plugin_config_get( 'CPT_texts', array(), ALL_USERS, ALL_PROJECTS );
 	$t_txt = $t_all[$p_name];
 	if( null == $t_txt ) {
 		return null;
@@ -70,25 +117,36 @@ function CPT_text_load( $p_name, $p_project_id ) {
 	}
 }
 
-function CPT_text_delete( $p_name, $p_project_id ) {
-	$t_all = plugin_config_get( 'CPT_texts', array(), ALL_USERS, $p_project_id );
+/**
+ * Deletes a text from db
+ * @param string $p_name	Name of text
+ */
+function CPT_text_delete( $p_name ) {
+	$t_all = plugin_config_get( 'CPT_texts', array(), ALL_USERS, ALL_PROJECTS );
 	unset( $t_all[$p_name] );
-	plugin_config_set( 'CPT_texts', $t_all, ALL_USERS, $p_project_id );
+	plugin_config_set( 'CPT_texts', $t_all, ALL_USERS, ALL_PROJECTS );
 }
 
-function CPT_text_save( CPT_Text $t, $p_project_id ) {
+/**
+ * Stores a Text in db
+ * @param CPT_Text $t	Text object
+ */
+function CPT_text_save( CPT_Text $t ) {
 	$t_item['name'] = $t->name;
 	$t_item['description'] = $t->description;
 	$t_item['user'] = auth_get_current_user_id();
 	$t_item['contents'] = $t->contents;
 
-	$t_all = CPT_get_all_texts( $p_project_id );
+	$t_all = CPT_get_all_texts( );
 	$t_all[$t->name] = $t_item;
 	ksort( $t_all );
-	plugin_config_set( 'CPT_texts', $t_all, ALL_USERS, $p_project_id );
+	plugin_config_set( 'CPT_texts', $t_all, ALL_USERS, ALL_PROJECTS );
 }
 
-function print_project_list_option() {
+/**
+ * Prints option list for accessible projects, still unconfigured
+ */
+function CPT_print_pending_project_list() {
 	$t_projects = user_get_all_accessible_projects( auth_get_current_user_id(), ALL_PROJECTS );
 	foreach( $t_projects as $t_project_id ){
 		if( ( user_get_access_level( auth_get_current_user_id(), $t_project_id ) >= CPT_threshold( 'manage_project_threshold' ) )
@@ -100,6 +158,10 @@ function print_project_list_option() {
 	}
 }
 
+/**
+ * Print navigation menu
+ * @param string $p_page Page where is called to not hyperlink
+ */
 function CPT_print_menu( $p_page = '' ) {
 	$t_pages = array(
 			'manage_config' => CPT_threshold( array( 'manage_allprojects_threshold', 'manage_project_threshold' ) ),
@@ -121,6 +183,10 @@ function CPT_print_menu( $p_page = '' ) {
 	}
 }
 
+/**
+ * get defaults for plugin initialization
+ * @return type
+ */
 function CPT_get_defaults () {
 	return array(
 		'enable_allpr' => TRUE,
@@ -137,6 +203,12 @@ function CPT_get_defaults () {
 	);
 }
 
+/**
+ * return access level configured for $t_perm permission definition
+ * see configuration => 'access_level' => keys
+ * @param string|array $t_perm
+ * @return type
+ */
 function CPT_threshold( $t_perm ) {
 	$t_default = CPT_get_defaults()['access_level'];
 	$t_access = plugin_config_get( 'access_level', $t_default , FALSE, ALL_USERS, ALL_PROJECTS );

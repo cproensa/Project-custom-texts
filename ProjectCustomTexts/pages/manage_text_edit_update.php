@@ -22,7 +22,7 @@ $f_newlang = gpc_get( 'new_lang', null );
 
 if( $t_action === 'DELETE' ) {
 	helper_ensure_confirmed( plugin_lang_get( 'ensure_delete_text' ), plugin_lang_get( 'delete_button' ) );
-	CPT_text_delete( $f_name, ALL_PROJECTS );
+	CPT_text_delete( $f_name );
 	print_successful_redirect( plugin_page( 'manage_text', true ) );
 }
 

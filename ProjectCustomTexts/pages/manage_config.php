@@ -162,7 +162,7 @@ CPT_print_menu( $t_this_page );
 			<label><span><?php echo plugin_lang_get( 'projects_without_config' )  ?></span></label>
 			<span class="select">
 				<select id="add-user-project-id" name="add_project_id[]" multiple="multiple" size="5">
-					<?php print_project_list_option(); ?>
+					<?php CPT_print_pending_project_list(); ?>
 				</select>
 			</span>
 			<span class="label-style"></span>

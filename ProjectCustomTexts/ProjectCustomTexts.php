@@ -121,7 +121,7 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 
 		if( $showall ) {
 			$txt = plugin_config_get( 'project_all', array(), null, ALL_USERS, ALL_PROJECTS );
-			$t_obj = CPT_text_load( $txt['txt_pred'], $p_project_id );
+			$t_obj = CPT_text_load( $txt['txt_pred'] );
 			if( $t_obj ) {
 				echo '<div class="field-container"><span>';
 				echo string_nl2br( $t_obj->get_localized_txt() );
@@ -130,7 +130,7 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 		}
 		if( $showpr ) {
 			$txt = plugin_config_get( 'project', array(), null, ALL_USERS, $p_project_id );
-			$t_obj = CPT_text_load( $txt['txt_pred'], $p_project_id );
+			$t_obj = CPT_text_load( $txt['txt_pred'] );
 			if( $t_obj ) {
 				echo '<div class="field-container"><span>';
 				echo string_nl2br( $t_obj->get_localized_txt() );

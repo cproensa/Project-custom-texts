@@ -10,7 +10,7 @@ print_manage_menu();
 CPT_print_menu();
 
 $f_name = gpc_get( 'txt_name' );
-$t_obj = CPT_text_load( $f_name, ALL_PROJECTS );
+$t_obj = CPT_text_load( $f_name );
 if( null == $t_obj ) {
 	error_parameters( $f_name );
 	trigger_error( ERROR_LANG_STRING_NOT_FOUND, ERROR );

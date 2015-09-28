@@ -32,7 +32,7 @@ CPT_print_menu( $t_this_page );
 
 			<tbody>
 			<?php
-				$t_all = CPT_get_all_texts( ALL_PROJECTS );
+				$t_all = CPT_get_all_texts( );
 				$t_page_edit = plugin_page( 'manage_text_edit' );
 				$t_label_edit = plugin_lang_get( 'edit' );
 				//$t_token_edit = form_security_token( 'CPT_manage_text_edit' );

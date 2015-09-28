@@ -16,7 +16,7 @@ if( CPT_text_name_exists( $f_name ) ) {
 	trigger_error( ERROR_CUSTOM_FIELD_NAME_NOT_UNIQUE, ERROR );
 }
 
-$t_textobj = new CPT_Text();
+$t_textobj = new CPT_Text( null );
 $t_textobj->name = string_normalize( $f_name );
 $t_textobj->description = '';
 $t_textobj->user = auth_get_current_user_id();
