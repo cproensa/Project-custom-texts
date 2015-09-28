@@ -4,7 +4,7 @@
 auth_reauthenticate( );
 access_ensure_project_level( CPT_threshold( array( 'edit_all_threshold', 'edit_own_threshold' ) ) );
 
-form_security_validate( 'CPT_manage_text_edit' );
+//form_security_validate( 'CPT_manage_text_edit' );
 html_page_top( plugin_lang_get( 'configuration' ) ); 
 print_manage_menu();
 CPT_print_menu();
@@ -92,6 +92,6 @@ $t_lang_unused = array_diff( $t_lang_available, array_keys( $t_obj->contents ), 
 </div>
 
 <?php
-form_security_purge( 'CPT_manage_text_edit' );
+//form_security_purge( 'CPT_manage_text_edit' );
 html_page_bottom();
 ?>

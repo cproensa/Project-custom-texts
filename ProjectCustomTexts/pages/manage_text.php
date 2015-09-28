@@ -35,7 +35,7 @@ CPT_print_menu( $t_this_page );
 				$t_all = CPT_get_all_texts( ALL_PROJECTS );
 				$t_page_edit = plugin_page( 'manage_text_edit' );
 				$t_label_edit = plugin_lang_get( 'edit' );
-				$t_token_edit = form_security_token( 'CPT_manage_text_edit' );
+				//$t_token_edit = form_security_token( 'CPT_manage_text_edit' );
 				$t_page_delete = plugin_page( 'manage_text_delete' );
 				$t_label_delete =  plugin_lang_get( 'delete_button' ) ;
 				$t_token_delete = form_security_token( 'CPT_manage_text_delete' );
@@ -53,7 +53,7 @@ CPT_print_menu( $t_this_page );
 				if( access_has_global_level( CPT_threshold( 'edit_all_threshold', ALL_PROJECTS ) )
 							|| ( access_has_project_level( CPT_threshold( 'edit_own_threshold' ) ) && $t_obj->user == auth_get_current_user_id() )
 						) {
-							print_button( $t_page_edit, $t_label_edit, array( 'txt_name' => $t_obj->name, 'CPT_manage_text_edit_token' => $t_token_edit ), OFF);
+							print_button( $t_page_edit, $t_label_edit, array( 'txt_name' => $t_obj->name, /*'CPT_manage_text_edit_token' => $t_token_edit*/ ), OFF);
 							print_button( $t_page_delete, $t_label_delete, array( 'txt_name' => $t_obj->name, 'CPT_manage_text_delete_token' => $t_token_delete ), OFF);
 						}
 				?>

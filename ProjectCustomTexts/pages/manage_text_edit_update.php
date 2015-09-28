@@ -52,6 +52,6 @@ if( $t_action === 'UPDATE' ) {
 	print_successful_redirect( plugin_page( 'manage_text', true ) );
 }
 if( $t_action === 'ADDLANG' ) {
-	print_successful_redirect( plugin_page( 'manage_text_edit', true ) . '&t_name='. string_url( $f_name ) );
+	print_successful_redirect( plugin_page( 'manage_text_edit', true ) . '&txt_name='. string_url( $f_name ) );
 }
 ?>
