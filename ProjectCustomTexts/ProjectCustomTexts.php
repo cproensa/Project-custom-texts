@@ -83,15 +83,23 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 		return $hooks;
 	}
 
-        
+	/**
+	 * If user cant have the general "Administration" menu, print link in the view_all_bugs options menu
+	 * @return string
+	 */
 	function CPT_get_manage_menu_alt() {
 		if( !access_has_global_level( config_get( 'manage_site_threshold' ) ) ) {
 			return $this->CPT_get_manage_menu();
 		}
 	}
-        
+
+	/**
+	 * Prints link inside "Administration" menu
+	 * @return type
+	 */
 	function CPT_get_manage_menu( ) {
-		$t_min = min(plugin_config_get( ('access_level'), config_get( 'manage_plugin_threshold' ), FALSE, ALL_USERS, ALL_PROJECTS ) );
+//		$t_min = min(plugin_config_get( ('access_level'), config_get( 'manage_plugin_threshold' ), FALSE, ALL_USERS, ALL_PROJECTS ) );
+		$t_min = CPT_threshold( array( 'manage_allprojects_threshold', 'manage_project_threshold', 'edit_all_threshold', 'edit_own_threshold' ) );
 		if( access_has_project_level( $t_min ) ) {
 			return array( '<a href="' . plugin_page( 'manage_config' ) . '">' . plugin_lang_get( 'manage_CPT' ) . '</a>' );
 		}
