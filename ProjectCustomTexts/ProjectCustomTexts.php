@@ -1,8 +1,21 @@
 <?php
-/*
+
+
+$t_version_core = substr(
+		MANTIS_VERSION,
+		0,
+		strpos( MANTIS_VERSION, '.', strpos( MANTIS_VERSION, '.' ) + 1 )
+	);
+
+if( $t_version_core === '1.3' ) define( 'GET_VER', '1.3');
+else if( $t_version_core === '1.2' ) define( 'GET_VER', '1.2');
+
+
+
 // Needed for MantisBT 1.2.x.
 // Not needed for MantisBT 1.3.x
 require_once( config_get( 'class_path' ) . 'MantisPlugin.class.php' );
+
 
 // New function in MantisBT 1.3.x
 // Included for compatibility with 1.2.x
@@ -16,10 +29,13 @@ if ( !function_exists( 'plugin_require_api' ) )
 		}
 
 		$t_path = config_get_global( 'plugin_path' ) . $t_current . '/';
+		//$t_path = '/var/www/src/mantisbt-1.2.19/plugins/' . $t_current . '/';
 
 		require_once( $t_path . $p_file );
 	}
 }
+
+
 
 // New function in MantisBT 1.3.x
 // Included for compatibility with 1.2.x
@@ -39,7 +55,7 @@ if ( !function_exists( 'require_api' ) )
 	}
 }
 
-*/
+
 
 
 class ProjectCustomTextsPlugin extends MantisPlugin {
@@ -55,22 +71,24 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
                 $this->name = 'ProjectCustomTexts';    # Proper name of plugin
                 $this->description = 'Manage Custom Texts for projects';    # Short description of the plugin
                 $this->page = 'manage_config';           # Default plugin page
-                
-                $this->version = '1.0';     # Plugin version string
-                $this->requires = array(    # Plugin dependencies, array of basename => version pairs
-                    'MantisCore' => '1.3.0',  #   Should always depend on an appropriate version of MantisBT
-                    );
-                
+                $this->version = '1.1';     # Plugin version string
+
+				if( '1.3' === GET_VER ) {
+					$this->requires = array( "MantisCore" => "1.3" );
+				}
+				else if( '1.2' === GET_VER ) {
+					$this->requires = array( "MantisCore" => "1.2" );
+				}
+
                 $this->author = 'Carlos Proensa';         # Author/team name
                 $this->contact = '';        # Author/team e-mail address
                 $this->url = '';            # Support webpage
         }
-     
 
-        function config() {
-                return CPT_get_defaults();
-            }        
-        
+
+	function config() {
+            return CPT_get_defaults();
+	}
 
 	function hooks( )
 	{
@@ -131,18 +149,36 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 			$txt = plugin_config_get( 'project_all', array(), null, ALL_USERS, ALL_PROJECTS );
 			$t_obj = CPT_text_load( $txt['txt_pred'] );
 			if( $t_obj ) {
-				echo '<div class="field-container"><span>';
-				echo string_nl2br( $t_obj->get_localized_txt() );
-				echo '</span></div>';
+				# HTML for mantis 1.2
+				if( '1.2' === GET_VER ) {
+					echo '<tr class="' . helper_alternate_class( 1 ) . '"><td colspan="2">';
+					echo string_nl2br( $t_obj->get_localized_txt() );
+					echo '</td></tr>';
+				}
+				# HTML for mantis 1.3
+				else{
+					echo '<div class="field-container"><span>';
+					echo string_nl2br( $t_obj->get_localized_txt() );
+					echo '</span></div>';
+				}
 			}
 		}
 		if( $showpr ) {
 			$txt = plugin_config_get( 'project', array(), null, ALL_USERS, $p_project_id );
 			$t_obj = CPT_text_load( $txt['txt_pred'] );
 			if( $t_obj ) {
-				echo '<div class="field-container"><span>';
-				echo string_nl2br( $t_obj->get_localized_txt() );
-				echo '</span></div>';
+				# HTML for mantis 1.2
+				if( '1.2' === GET_VER ) {
+					echo '<tr class="' . helper_alternate_class( 1 ) . '"><td colspan="2">';
+					echo string_nl2br( $t_obj->get_localized_txt() );
+					echo '</td></tr>';
+				}
+				# HTML for mantis 1.3
+				else{
+					echo '<div class="field-container"><span>';
+					echo string_nl2br( $t_obj->get_localized_txt() );
+					echo '</span></div>';
+				}
 			}
 		}
 	}

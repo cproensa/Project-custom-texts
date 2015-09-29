@@ -108,7 +108,7 @@ function CPT_get_alltext_option_list( $p_project_id, $include_none = TRUE, $defa
  */
 function CPT_text_load( $p_name ) {
 	$t_all = plugin_config_get( 'CPT_texts', array(), ALL_USERS, ALL_PROJECTS );
-	$t_txt = $t_all[$p_name];
+	$t_txt = isset($t_all[$p_name]) ? $t_all[$p_name] : null;
 	if( null == $t_txt ) {
 		return null;
 	}
@@ -146,16 +146,18 @@ function CPT_text_save( CPT_Text $t ) {
 /**
  * Prints option list for accessible projects, still unconfigured
  */
-function CPT_print_pending_project_list() {
+function CPT_get_pending_project_list() {
+	$s = null;
 	$t_projects = user_get_all_accessible_projects( auth_get_current_user_id(), ALL_PROJECTS );
 	foreach( $t_projects as $t_project_id ){
 		if( ( user_get_access_level( auth_get_current_user_id(), $t_project_id ) >= CPT_threshold( 'manage_project_threshold' ) )
 			&& ( null === plugin_config_get( 'project', null, null, ALL_USERS, $t_project_id ) ) )
 		{
 			$t_project_name = project_get_name( $t_project_id );
-			echo '<option value="' . $t_project_id . '">' . $t_project_name . '</option>';
+			$s.= '<option value="' . $t_project_id . '">' . $t_project_name . '</option>';
 		}
 	}
+	return $s;
 }
 
 /**
@@ -188,19 +190,20 @@ function CPT_print_menu( $p_page = '' ) {
  * @return type
  */
 function CPT_get_defaults () {
-	return array(
-		'enable_allpr' => TRUE,
-		'project_all' => array(),
-		'enable_pr' => TRUE,
-		'project' => null,
-		'CPT_texts' => array(),
-		'access_level' => array (
-							'manage_allprojects_threshold' => config_get( 'manage_plugin_threshold' ),
-							'manage_project_threshold' => config_get( 'manage_plugin_threshold' ),
-							'edit_all_threshold' => config_get( 'manage_plugin_threshold' ),
-							'edit_own_threshold' => config_get( 'manage_plugin_threshold' )
-							)
-	);
+    $t_manage_plugin_threshold = config_get( 'manage_plugin_threshold', null, ALL_USERS, ALL_PROJECTS);
+    return array(
+	    'enable_allpr' => TRUE,
+	    'project_all' => array(),
+	    'enable_pr' => TRUE,
+	    'project' => null,
+	    'CPT_texts' => array(),
+	    'access_level' => array (
+				'manage_allprojects_threshold' => $t_manage_plugin_threshold,
+				'manage_project_threshold' => $t_manage_plugin_threshold,
+				'edit_all_threshold' => $t_manage_plugin_threshold,
+				'edit_own_threshold' => $t_manage_plugin_threshold
+				)
+    );
 }
 
 /**
@@ -223,6 +226,22 @@ function CPT_threshold( $t_perm ) {
 	else {
 		return $t_access[$t_perm];
 	}
+}
+
+function CPT_print_enum_string_option_list( $p_enum_name, $p_val ){
+    ob_start();
+    print_enum_string_option_list( $p_enum_name, $p_val );
+    $result = ob_get_contents();
+    ob_end_clean();
+    return $result;
+}
+
+function CPT_print_button( $p_action_page, $p_label, $p_args_to_post, $p_security_token ){
+    ob_start();
+	print_button( $p_action_page, $p_label, $p_args_to_post, $p_security_token );
+    $result = ob_get_contents();
+    ob_end_clean();
+    return $result;
 }
 
 ?>

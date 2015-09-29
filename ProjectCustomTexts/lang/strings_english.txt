@@ -5,6 +5,7 @@ $s_plugin_ProjectCustomTexts_manage_CPT = 'Manage PrTxt';
 $s_plugin_ProjectCustomTexts_manage_config_title = 'Manage project configuration';
 $s_plugin_ProjectCustomTexts_manage_text_title = 'Manage texts';
 $s_plugin_ProjectCustomTexts_manage_preferences_title = 'Preferences';
+$s_plugin_ProjectCustomTexts_manage_text_edit_title = 'Edit text';
 
 $s_plugin_ProjectCustomTexts_enabled = 'Enabled';
 $s_plugin_ProjectCustomTexts_all_projects_config =  'General configuration (all projects)';
@@ -44,7 +45,7 @@ $s_plugin_ProjectCustomTexts_configure_own_projects = 'Configure only own projec
 $s_plugin_ProjectCustomTexts_edit_all_texts = 'Edit all texts';
 $s_plugin_ProjectCustomTexts_edit_own_texts = 'Edit only own texts';
 $s_plugin_ProjectCustomTexts_saved_configurations = 'Saved configuration';
-$s_plugin_ProjectCustomTexts_reset_default_permissions = 'Reset permimssions';
+$s_plugin_ProjectCustomTexts_reset_default_permissions = 'Reset permissions';
 $s_plugin_ProjectCustomTexts_reset_default_permissions_txt = 'Reset permission configuration to the default settings';
 $s_plugin_ProjectCustomTexts_delete_all_configuration = 'Delete all configuration';
 $s_plugin_ProjectCustomTexts_delete_all_configuration_txt = 'Deletes all configurations on permissions, projects and texts';

@@ -5,7 +5,7 @@ auth_reauthenticate( );
 access_ensure_project_level( CPT_threshold( array( 'edit_all_threshold', 'edit_own_threshold' ) ) );
 
 //form_security_validate( 'CPT_manage_text_edit' );
-html_page_top( plugin_lang_get( 'configuration' ) ); 
+html_page_top( plugin_lang_get( 'manage_text_edit_title' ) );
 print_manage_menu();
 CPT_print_menu();
 
@@ -28,70 +28,174 @@ if( !isset( $t_obj->contents[$t_lang_fallback] ) ) {
 }
 
 $t_lang_unused = array_diff( $t_lang_available, array_keys( $t_obj->contents ), array( 'auto' ) );
+
+
+
+
+
+/*
+ * prepare screen elements
+ */
+$scr['b_del'] = CPT_print_button( plugin_page( 'manage_text_delete' ), plugin_lang_get( 'delete_button' ) , array( 'txt_name' => $t_obj->name, 'CPT_manage_text_delete_token' => form_security_token( 'CPT_manage_text_delete' ) ), OFF );
+$scr['legend'] = plugin_lang_get( 'edit_predefined_text' );
+$scr['action'] = plugin_page( 'manage_text_edit_update' );
+$scr['token'] = form_security_field( 'CPT_manage_text_edit_update' );
+
+$field['label'] = plugin_lang_get( 'name' );
+$field['input'] = '<input type="text" name="txt_name" size="25" maxlength="25" readonly value="' . $t_obj->name . '" />';
+$scr['fields'][1] = $field;
+$field['label'] = plugin_lang_get( 'description' );
+$field['input'] = '<input type="text" name="txt_descr" size="60" maxlength="128" value="' . $t_obj->description . '"/>';
+$scr['fields'][2] = $field;
+
+$scr['txts'] = array();
+$i = 0;
+foreach( $t_obj->contents as $t_lang => $t_str ) {
+	$t_def = ($t_lang == $t_lang_default ) ? '[' . plugin_lang_get( 'default' ) . ']' : '';
+	$t_fbk = ($t_lang == $t_lang_fallback ) ? '[' . plugin_lang_get( 'fallback' ) . ']' : '';
+	$txt['label'] = plugin_lang_get( 'contents' );
+	$txt['sub1'] = $t_lang;
+	$txt['sub2'] = "$t_def $t_fbk";
+	$txt['area'] = '<textarea name="txt_cont[' . $i . ']" cols="100" rows="5">' . string_textarea( $t_str ) . '</textarea>';
+	$txt['hidden'] = '<input type="hidden" name="txt_lang[' . $i . ']" value="' . $t_lang . '" />';
+	$i++;
+	$scr['txts'][] = $txt;
+}
+
+$scr['langlist'] = '';
+$scr['langbtn'] = '';
+if( !empty( $t_lang_unused ) ) {
+	$scr['langlist'] .= '<select name="new_lang">';
+	foreach( $t_lang_unused as $t_l ) {
+		if( $t_l != 'auto' ) {
+		  $scr['langlist'] .= '<option value="' . $t_l . '">' . $t_l . '</option>';
+		}
+	}
+	$scr['langlist'] .= '</select>';
+	$scr['langbtn'] = '<input type="submit" class="button-small" name="btn_addlang" value="' . plugin_lang_get( 'add_lang_button' ) . '" />';
+}
+$scr['savebtn'] = '<input type="submit" class="button" name="btn_upd" value="' . plugin_lang_get( 'save' ) . '" />';
+?>
+
+
+<?php
+#
+# HTML for mantis 1.2
+#
+if( '1.2' === GET_VER ) {
+?>
+
+<div align="center">
+	<?php echo $scr['token']; ?>
+	<table class="width75" cellspacing="1">
+			<tr>
+				<td width="80%" class="form-title" colspan="2">
+					<?php echo $scr['legend']; ?>
+				</td>
+				<td width="80%" class="right">
+					<?php echo $scr['b_del']; ?>
+				</td>
+			</tr>
+		<form method="post" action="<?php echo $scr['action']; ?>">
+			<tr <?php echo helper_alternate_class( 1 ) ?>>
+				<td class="category" width="30%">
+					<span class="required">*</span>
+					<?php echo $scr['fields'][1]['label']; ?>
+				</td>
+				<td width="70%" colspan="2">
+					<?php echo $scr['fields'][1]['input']; ?>
+				</td>
+			</tr>
+			<tr <?php echo helper_alternate_class( 1 ) ?>>
+				<td class="category" width="30%">
+					<?php echo $scr['fields'][2]['label']; ?>
+				</td>
+				<td width="70%" colspan="2">
+					<?php echo $scr['fields'][2]['input']; ?>
+				</td>
+			</tr>
+			<?php foreach( $scr['txts'] as $txt ) { ?>
+				<tr <?php echo helper_alternate_class( 1 ) ?>>
+					<td class="category" width="30%">
+						<span><?php echo $txt['label']; ?></span><br>
+						<span><?php echo $txt['sub1']; ?></span><br>
+						<span class="small"><?php echo $txt['sub2']; ?></span>
+					</td>
+					<td width="70%" colspan="2">
+						<?php echo $txt['area']; ?>
+						<?php echo $txt['hidden']; ?>
+					</td>
+				</tr>
+			<?php } ?>
+			<tr>
+				<td colspan="3" class="left">
+					<?php echo $scr['langlist']; ?>
+					<?php echo $scr['langbtn']; ?>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" class="center">
+					<?php echo $scr['savebtn']; ?>
+				</td>
+			</tr>
+		</form>
+	</table>
+</div>
+
+
+<?php
+} #endif html 1.2
+else {
+#
+# HTML for mantis 1.3
+#
 ?>
 
 <div class="form-container">
 	<fieldset>
 		<div class="floatright">
-		<?php print_button( plugin_page( 'manage_text_delete' ), plugin_lang_get( 'delete_button' ) , array( 'txt_name' => $t_obj->name, 'CPT_manage_text_delete_token' => form_security_token( 'CPT_manage_text_delete' ) ), OFF); ?>
+		<?php echo $scr['b_del']; ?>
 		</div>
 	<legend>
-		<span><?php echo plugin_lang_get( 'edit_predefined_text' ); ?></span>
+		<span><?php echo $scr['legend']; ?></span>
 	</legend>
-	<form method="post" action="<?php echo plugin_page( 'manage_text_edit_update' ); ?>">
-		<?php  echo form_security_field( 'CPT_manage_text_edit_update' ); ?>
-
-		   <div class="field-container">
-				   <label class="required"><span><?php echo plugin_lang_get( 'name' ); ?></span></label>
-				   <span class="input"><input type="text" name="txt_name" size="25" maxlength="25" readonly value="<?php echo $t_obj->name; ?>" /></span>
-				   <span class="label-style"></span>
-		   </div>
-		   <div class="field-container">
-				   <label><span><?php echo plugin_lang_get( 'description' ); ?></span></label>
-				   <span class="input"><input type="text" name="txt_descr" size="60" maxlength="128" value="<?php echo $t_obj->description; ?>"/></span>
-				   <span class="label-style"></span>
-		   </div>
-		<?php
-		$i = 0;
-		foreach( $t_obj->contents as $t_lang => $t_str ) {
-			$t_def = ($t_lang == $t_lang_default ) ? '[' . plugin_lang_get( 'default' ) . ']' : '';
-			$t_fbk = ($t_lang == $t_lang_fallback ) ? '[' . plugin_lang_get( 'fallback' ) . ']' : '';
-		?>
+	<form method="post" action="<?php echo $scr['action']; ?>">
+	<?php echo $scr['token']; ?>
+		<div class="field-container">
+				<label class="required"><span><?php echo $scr['fields'][1]['label'] ?></span></label>
+				<span class="input"><?php echo $scr['fields'][1]['input'] ?></span>
+				<span class="label-style"></span>
+		</div>
+		<div class="field-container">
+				<label><span><?php echo $scr['fields'][2]['label'] ?></span></label>
+				<span class="input"><?php echo $scr['fields'][2]['input'] ?></span>
+				<span class="label-style"></span>
+		</div>
+		<?php foreach( $scr['txts'] as $txt ) { ?>
 			<div class="field-container">
-				<label><span><?php echo plugin_lang_get( 'contents' ); ?></span><br><?php echo "<span>$t_lang</span><br>" . '<span class="small">' . "$t_def $t_fbk</span>"; ?></span></label>
-				<span class="textarea"><textarea name="txt_cont[<?php echo $i; ?>]" cols="128" rows="5"><?php echo string_textarea( $t_str ); ?></textarea></span>
-				<input type="hidden" name="txt_lang[<?php echo $i; ?>]" value="<?php echo $t_lang; ?>" />
+				<label>
+					<span><?php echo $txt['label']; ?></span><br>
+					<span><?php echo $txt['sub1']; ?></span><br>
+					<span class="small"><?php echo $txt['sub2']; ?></span>
+				</label>
+				<span class="textarea"><?php echo $txt['area']; ?></span>
+				<?php echo $txt['hidden']; ?>
 				<span class="label-style"></span>
 			</div>
-		<?php
-		$i += 1;
-		}
-		?>
+		<?php } ?>
 		</fieldset>
 		<span>
-			<?php if( !empty( $t_lang_unused ) ) {
-			?>
-			<select name="new_lang">
-				<?php
-				foreach( $t_lang_unused as $t_l ) {
-					if( $t_l != 'auto' ) {
-					   echo '<option value="' . $t_l . '">' . $t_l . '</option>';
-					}
-				}
-				?>
-			</select>
-			<input type="submit" class="button-small" name="btn_addlang" value="<?php echo plugin_lang_get( 'add_lang_button' ); ?>" />
-			<?php
-			   }
-			?>
+			<?php echo $scr['langlist']; ?>
+			<?php echo $scr['langbtn']; ?>
 		</span>
 		<hr>
-		<span class="submit-button"><input type="submit" class="button" name="btn_upd" value="<?php echo plugin_lang_get( 'save' ); ?>" /></span>
+		<span class="submit-button"><?php echo $scr['savebtn']; ?></span>
 
 	</form>
 </div>
 
 <?php
-//form_security_purge( 'CPT_manage_text_edit' );
+
+} #end html 1.3
 html_page_bottom();
 ?>

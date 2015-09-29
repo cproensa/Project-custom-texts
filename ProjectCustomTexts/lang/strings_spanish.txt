@@ -5,6 +5,7 @@ $s_plugin_ProjectCustomTexts_manage_CPT = 'Administrar PrTxt';
 $s_plugin_ProjectCustomTexts_manage_config_title = 'Configurar proyectos';
 $s_plugin_ProjectCustomTexts_manage_text_title = 'Administrar textos';
 $s_plugin_ProjectCustomTexts_manage_preferences_title = 'Preferencias';
+$s_plugin_ProjectCustomTexts_manage_text_edit_title = 'Editar texto';
 
 
 $s_plugin_ProjectCustomTexts_enabled = 'Activado';

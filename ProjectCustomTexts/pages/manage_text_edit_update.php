@@ -4,6 +4,7 @@
 access_ensure_project_level( CPT_threshold( array( 'edit_all_threshold', 'edit_own_threshold' ) ) );
 form_security_validate( 'CPT_manage_text_edit_update' );
 
+$t_action = '';
 if( null != gpc_get( 'btn_upd', null ) ){
 	$t_action = 'UPDATE';
 }
