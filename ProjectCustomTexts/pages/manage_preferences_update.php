@@ -21,11 +21,13 @@ if( null != gpc_get( 'btn_upd', null ) ){
 }
 
 if( null != gpc_get( 'btn_reset', null ) ){
+	helper_ensure_confirmed( lang_get('config_delete_sure') . '<br />' . plugin_lang_get( 'reset_default_permissions_txt' ), plugin_lang_get( 'reset_default_permissions' ) );
 	$t_def = CPT_get_defaults();
 	plugin_config_set( 'access_level', $t_def['access_level'], ALL_USERS, ALL_PROJECTS );
 }
 
 if( null != gpc_get( 'btn_delete', null ) ){
+	helper_ensure_confirmed( lang_get('config_delete_sure') . '<br />' . plugin_lang_get( 'delete_all_configuration_txt' ), plugin_lang_get( 'delete_all_configuration' ) );
 	$t_def = CPT_get_defaults();
 	foreach( array_keys( $t_def ) as $t_key ) {
 		plugin_config_delete( $t_key, ALL_USERS, ALL_PROJECTS );
