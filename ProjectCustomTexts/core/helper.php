@@ -97,7 +97,7 @@ function CPT_get_alltext_option_list( $p_project_id, $include_none = TRUE, $defa
 		$t_name = $i_data['name'];
 		$t_user =  user_get_name($i_data['user']);
 		$selected = ( $t_name == $defaulted ) ? ' selected="selected"' : '';
-		$str .= '<option'.$selected.'>' . $t_name . ' [' . $t_user . ']</option>';
+		$str .= '<option value="' . $t_name . '" '.$selected.'>' . $t_name . ' [' . $t_user . ']</option>';
 	}
 	$str .= '</select>';
 	return $str;
