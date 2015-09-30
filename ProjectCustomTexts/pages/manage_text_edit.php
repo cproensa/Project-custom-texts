@@ -86,17 +86,17 @@ if( '1.2' === GET_VER ) {
 ?>
 
 <div align="center">
-	<?php echo $scr['token']; ?>
 	<table class="width75" cellspacing="1">
 			<tr>
 				<td width="80%" class="form-title" colspan="2">
 					<?php echo $scr['legend']; ?>
 				</td>
-				<td width="80%" class="right">
+				<td width="20%" class="right">
 					<?php echo $scr['b_del']; ?>
 				</td>
 			</tr>
 		<form method="post" action="<?php echo $scr['action']; ?>">
+		<?php echo $scr['token']; ?>
 			<tr <?php echo helper_alternate_class( 1 ) ?>>
 				<td class="category" width="30%">
 					<span class="required">*</span>

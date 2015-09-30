@@ -19,7 +19,7 @@ CPT_print_menu( $t_this_page );
 $scr['legend'] = plugin_lang_get( 'manage_predefined_texts' );
 $scr['head'][1] = plugin_lang_get( 'name' );
 $scr['head'][2] = plugin_lang_get( 'description' );
-$scr['head'][3] = plugin_lang_get( 'languages' );
+$scr['head'][3] = plugin_lang_get( 'contents' );
 $scr['head'][4] = plugin_lang_get( 'created_by' );
 $scr['head'][5] = plugin_lang_get( 'action' );
 
