@@ -88,14 +88,16 @@ function CPT_get_all_texts( ) {
  */
 function CPT_get_alltext_option_list( $p_project_id, $include_none = TRUE, $defaulted = null) {
 	$t_all = CPT_get_all_texts( );
+	ksort( $t_all );
 	$str ='<select name="sel_txt[' . $p_project_id . ']">';
 	if( $include_none ) {
 		$str .= '<option value="">[' . lang_get( 'none' ) . ']</option>';
 	}
 	foreach( $t_all as $i_name => $i_data ) {
 		$t_name = $i_data['name'];
+		$t_user =  user_get_name($i_data['user']);
 		$selected = ( $t_name == $defaulted ) ? ' selected="selected"' : '';
-		$str .= '<option'.$selected.'>' . $t_name . '</option>';
+		$str .= '<option'.$selected.'>' . $t_name . ' [' . $t_user . ']</option>';
 	}
 	$str .= '</select>';
 	return $str;

@@ -65,7 +65,7 @@ while( 0 < count( $t_stack ) ) {
 	# only print row if user has project management privileges
 	# and exists the configuration for that project
 	$t_configitem = @plugin_config_get( 'project', null, null, ALL_USERS, $t_project_id );
-	if( $t_configitem && !is_empty( $t_configitem ) && access_has_project_level( $t_manage_project_threshold, $t_project_id, auth_get_current_user_id() ) ) {
+	if( $t_configitem && !empty( $t_configitem ) && access_has_project_level( $t_manage_project_threshold, $t_project_id, auth_get_current_user_id() ) ) {
 		$row[1] = str_repeat( '&raquo; ', $t_level ) . string_display( $t_project['name'] );
 		$row['hidden'] = '<input type="hidden" name="prid[]" value="' . $t_project_id . '" />';
 		$t_flag = $t_configitem['show_all'];
