@@ -151,7 +151,7 @@ function CPT_get_pending_project_list() {
 	$t_projects = user_get_all_accessible_projects( auth_get_current_user_id(), ALL_PROJECTS );
 	foreach( $t_projects as $t_project_id ){
 		if( ( user_get_access_level( auth_get_current_user_id(), $t_project_id ) >= CPT_threshold( 'manage_project_threshold' ) )
-			&& ( null === plugin_config_get( 'project', null, null, ALL_USERS, $t_project_id ) ) )
+			&& ( null === @plugin_config_get( 'project', null, null, ALL_USERS, $t_project_id ) ) )
 		{
 			$t_project_name = project_get_name( $t_project_id );
 			$s.= '<option value="' . $t_project_id . '">' . $t_project_name . '</option>';
