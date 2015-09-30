@@ -146,21 +146,50 @@ function CPT_text_save( CPT_Text $t ) {
 }
 
 /**
- * Prints option list for accessible projects, still unconfigured
+ * Recursive helper for project option list
  */
-function CPT_get_pending_project_list() {
-	$s = null;
-	$t_projects = user_get_all_accessible_projects( auth_get_current_user_id(), ALL_PROJECTS );
-	foreach( $t_projects as $t_project_id ){
-		if( ( user_get_access_level( auth_get_current_user_id(), $t_project_id ) >= CPT_threshold( 'manage_project_threshold' ) )
-			&& ( null === @plugin_config_get( 'project', null, null, ALL_USERS, $t_project_id ) ) )
+function CPT_get_subproject_option_list( $p_parent_id, $p_project_id = null, $p_parents = Array() ) {
+	if( null === $p_parents ) $p_parents = Array();
+	array_push( $p_parents, $p_parent_id );
+	$t_project_ids = current_user_get_accessible_subprojects( $p_parent_id );
+	project_cache_array_rows( $t_project_ids );
+	$t_project_count = count( $t_project_ids );
+	$s = '';
+	for( $i = 0;$i < $t_project_count;$i++ ) {
+		$t_full_id = $t_id = $t_project_ids[$i];
+		if( ( user_get_access_level( auth_get_current_user_id(), $t_id ) >= CPT_threshold( 'manage_project_threshold' ) )
+			&& ( null === @plugin_config_get( 'project', null, null, ALL_USERS, $t_id ) ) )
 		{
-			$t_project_name = project_get_name( $t_project_id );
-			$s.= '<option value="' . $t_project_id . '">' . $t_project_name . '</option>';
+			$s .= "<option value=\"";
+			$s .= $t_full_id . '"';
+			$s .= '>' . str_repeat( '&#160;', count( $p_parents ) ) . str_repeat( '&raquo;', count( $p_parents ) ) . ' ' . string_attribute( project_get_field( $t_id, 'name' ) ) . '</option>' . "\n";
 		}
+		$s .= CPT_get_subproject_option_list( $t_id, $p_project_id, $p_parents );
 	}
 	return $s;
 }
+
+/**
+ * Prints option list for accessible projects, those still unconfigured
+ */
+function CPT_get_pending_project_list() {
+	$t_project_ids = current_user_get_accessible_projects();
+	project_cache_array_rows( $t_project_ids );
+	$s = '';
+	$t_project_count = count( $t_project_ids );
+	for( $i = 0;$i < $t_project_count;$i++ ) {
+		$t_id = $t_project_ids[$i];
+		if( ( user_get_access_level( auth_get_current_user_id(), $t_id ) >= CPT_threshold( 'manage_project_threshold' ) )
+			&& ( null === @plugin_config_get( 'project', null, null, ALL_USERS, $t_id ) ) )
+		{
+			$s.= '<option value="' . $t_id . '"';
+			$s.= '>' . string_attribute( project_get_field( $t_id, 'name' ) ) . '</option>' . "\n";
+		}
+		$s.= CPT_get_subproject_option_list( $t_id, $p_project_id, $p_filter_project_id, $p_trace, Array() );
+	}
+	return $s;
+}
+
 
 /**
  * Print navigation menu
