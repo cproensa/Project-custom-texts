@@ -41,7 +41,7 @@ $scr['form2']['action'] = plugin_page( 'manage_preferences_update' );
 $scr['form2']['legend'] = plugin_lang_get( 'saved_configurations' );
 $scr['form2']['fields'][1]['button'] = '<input type="submit" name="btn_reset" value="' . plugin_lang_get( 'reset_default_permissions' ) . '" />';
 $scr['form2']['fields'][1]['descr'] = plugin_lang_get( 'reset_default_permissions_txt' );
-$scr['form2']['fields'][2]['button'] = '<input type="submit" name="btn_reset" value="' . plugin_lang_get( 'delete_all_configuration' ) . '" />';
+$scr['form2']['fields'][2]['button'] = '<input type="submit" name="btn_delete" value="' . plugin_lang_get( 'delete_all_configuration' ) . '" />';
 $scr['form2']['fields'][2]['descr'] = plugin_lang_get( 'delete_all_configuration_txt' )
 ?>
 
