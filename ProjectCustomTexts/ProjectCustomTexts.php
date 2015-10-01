@@ -157,7 +157,7 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 				}
 				# HTML for mantis 1.3
 				else{
-					echo '<div class="field-container"><span>';
+					echo '<div><span>';
 					echo string_nl2br( $t_obj->get_localized_txt() );
 					echo '</span></div>';
 				}
@@ -175,7 +175,7 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 				}
 				# HTML for mantis 1.3
 				else{
-					echo '<div class="field-container"><span>';
+					echo '<div><span>';
 					echo string_nl2br( $t_obj->get_localized_txt() );
 					echo '</span></div>';
 				}
