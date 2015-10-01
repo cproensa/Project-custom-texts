@@ -4,7 +4,6 @@ auth_reauthenticate( );
 CPT_ensure_access_level( array( 'edit_all', 'edit_own' ) );
 form_security_validate( 'CPT_manage_text_edit_update' );
 
-//@TODO check permissions
 $t_action = '';
 if( null != gpc_get( 'btn_upd', null ) ){
 	$t_action = 'UPDATE';
@@ -12,9 +11,11 @@ if( null != gpc_get( 'btn_upd', null ) ){
 if( null != gpc_get( 'btn_addlang', null ) ){
 	$t_action = 'ADDLANG';
 }
+/*
 if( null != gpc_get( 'btn_delete', null ) ){
 	$t_action = 'DELETE';
 }
+*/
 
 $f_name = gpc_get( 'txt_name' );
 $f_descr = gpc_get( 'txt_descr' );
@@ -22,11 +23,13 @@ $f_lang_array = gpc_get( 'txt_lang' );
 $f_cont_array = gpc_get( 'txt_cont' );
 $f_newlang = gpc_get( 'new_lang', null );
 
+/*
 if( $t_action === 'DELETE' ) {
 	helper_ensure_confirmed( plugin_lang_get( 'ensure_delete_text' ), plugin_lang_get( 'delete_button' ) );
 	CPT_text_delete( $f_name );
 	print_successful_redirect( plugin_page( 'manage_text', true ) );
 }
+ */
 
 if( null === $f_name or $f_name === '' ){
 	error_parameters( 'NAME' );

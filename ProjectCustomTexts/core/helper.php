@@ -272,31 +272,6 @@ function CPT_access_level( $p_perm, $p_project_id = null, $p_user_id = null) {
 	}
 }
 
-/**
- * return access level configured for $t_perm permission definition
- * see configuration => 'access_level' => keys
- * @param string|array $t_perm
- * @return type
- */
-/*
-function CPT_threshold( $p_perm ) {
-	$t_default = CPT_get_defaults();
-	$t_default_access = $t_default['access_level'];
-	$t_access = plugin_config_get( 'access_level', $t_default_access , FALSE, ALL_USERS, ALL_PROJECTS );
-	if( is_array( $p_perm ) ) {
-		$t_min = config_get( 'manage_plugin_threshold' );
-		foreach( $p_perm as $t_p ) {
-			$tmp = (int)( $t_access[$t_p] );
-			$t_min = min( $t_min, (int)( $t_access[$t_p] ) );
-		}
-		return $t_min;
-	}
-	else {
-		return $t_access[$t_perm];
-	}
-}
-*/
-
 function CPT_print_enum_string_option_list( $p_enum_name, $p_val ){
     ob_start();
     print_enum_string_option_list( $p_enum_name, $p_val );

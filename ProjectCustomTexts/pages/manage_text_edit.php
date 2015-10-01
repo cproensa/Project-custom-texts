@@ -11,10 +11,14 @@ CPT_print_menu();
 
 $f_name = gpc_get( 'txt_name' );
 $t_obj = CPT_text_load( $f_name );
-//@TODO check permisisons all & own
+
 if( null == $t_obj ) {
 	error_parameters( $f_name );
 	trigger_error( ERROR_LANG_STRING_NOT_FOUND, ERROR );
+}
+
+if( !( CPT_access_has_level( 'edit_all' ) || ( CPT_access_has_level( 'edit_own' ) && $t_obj->user == auth_get_current_user_id() ) ) ) {
+	access_denied();
 }
 
 $t_lang_available = config_get( 'language_choices_arr' );
