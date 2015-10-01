@@ -117,12 +117,18 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 	 */
 	function CPT_get_manage_menu( ) {
 //		$t_min = min(plugin_config_get( ('access_level'), config_get( 'manage_plugin_threshold' ), FALSE, ALL_USERS, ALL_PROJECTS ) );
+/*
 		$t_min = CPT_threshold( array( 'manage_allprojects_threshold', 'manage_project_threshold', 'edit_all_threshold', 'edit_own_threshold' ) );
 		if( access_has_project_level( $t_min ) ) {
 			return array( '<a href="' . plugin_page( 'manage_config' ) . '">' . plugin_lang_get( 'manage_CPT' ) . '</a>' );
 		}
-	}        
-        
+*/
+		$t_perm = array( 'manage_allprojects', 'manage_project', 'edit_all', 'edit_own' );
+		if( CPT_access_has_level( $t_perm ) ){
+			return array( '<a href="' . plugin_page( 'manage_config' ) . '">' . plugin_lang_get( 'manage_CPT' ) . '</a>' );
+		}
+	}
+
 	function reportBugFormTop( $p_event, $p_project_id ) {
 		//global $g_active_language;
 

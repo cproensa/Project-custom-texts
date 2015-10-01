@@ -2,7 +2,7 @@
 //plugin_require_api( 'core/helper.php' );
 
 auth_reauthenticate( );
-access_ensure_global_level( config_get( 'manage_plugin_threshold' ) );
+CPT_ensure_access_level('manage_configuration');
 form_security_validate( 'CPT_manage_preferences_update' );
 
 if( null != gpc_get( 'btn_upd', null ) ){
@@ -11,11 +11,12 @@ if( null != gpc_get( 'btn_upd', null ) ){
 	$f_access_alltxt =  gpc_get( 'access_alltxt' );
 	$f_access_owntxt = gpc_get ( 'access_owntxt' );
 
-	$t_access = array();
-	$t_access['manage_allprojects_threshold'] = $f_access_allpr;
-	$t_access['manage_project_threshold'] = $f_access_pr;
-	$t_access['edit_all_threshold'] = $f_access_alltxt;
-	$t_access['edit_own_threshold'] = $f_access_owntxt;
+	$t_default = CPT_get_defaults();
+	$t_access = $t_default['access_level'];
+	$t_access['manage_allprojects'] = $f_access_allpr;
+	$t_access['manage_project'] = $f_access_pr;
+	$t_access['edit_all'] = $f_access_alltxt;
+	$t_access['edit_own'] = $f_access_owntxt;
 
 	plugin_config_set( 'access_level', $t_access, ALL_USERS, ALL_PROJECTS );
 }

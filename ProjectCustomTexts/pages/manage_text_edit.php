@@ -2,7 +2,7 @@
 //plugin_require_api( 'core/helper.php' );
 
 auth_reauthenticate( );
-access_ensure_project_level( CPT_threshold( array( 'edit_all_threshold', 'edit_own_threshold' ) ) );
+CPT_ensure_access_level( array( 'edit_all', 'edit_own' ) );
 
 //form_security_validate( 'CPT_manage_text_edit' );
 html_page_top( plugin_lang_get( 'manage_text_edit_title' ) );
@@ -11,6 +11,7 @@ CPT_print_menu();
 
 $f_name = gpc_get( 'txt_name' );
 $t_obj = CPT_text_load( $f_name );
+//@TODO check permisisons all & own
 if( null == $t_obj ) {
 	error_parameters( $f_name );
 	trigger_error( ERROR_LANG_STRING_NOT_FOUND, ERROR );
@@ -28,8 +29,6 @@ if( !isset( $t_obj->contents[$t_lang_fallback] ) ) {
 }
 
 $t_lang_unused = array_diff( $t_lang_available, array_keys( $t_obj->contents ), array( 'auto' ) );
-
-
 
 
 

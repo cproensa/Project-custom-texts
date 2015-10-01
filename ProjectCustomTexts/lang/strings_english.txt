@@ -40,8 +40,10 @@ $s_plugin_ProjectCustomTexts_add_lang_button = 'Add language';
 $s_plugin_ProjectCustomTexts_save = 'Save';
 
 $s_plugin_ProjectCustomTexts_permissions_config = 'Permissions configuration';
-$s_plugin_ProjectCustomTexts_configure_all_projects = 'Configure all projects';
-$s_plugin_ProjectCustomTexts_configure_own_projects = 'Configure only own projects';
+$s_plugin_ProjectCustomTexts_configure_all_projects = 'Configure global text (all projects)';
+$s_plugin_ProjectCustomTexts_configure_own_projects = 'Configure texts for own projects';
+$s_plugin_ProjectCustomTexts_global_access_level = 'Global access level';
+$s_plugin_ProjectCustomTexts_project_access_level = 'Project access level';
 $s_plugin_ProjectCustomTexts_edit_all_texts = 'Edit all texts';
 $s_plugin_ProjectCustomTexts_edit_own_texts = 'Edit only own texts';
 $s_plugin_ProjectCustomTexts_saved_configurations = 'Saved configuration';

@@ -1,6 +1,6 @@
 <?php
 auth_reauthenticate( );
-access_ensure_project_level( CPT_threshold( array( 'edit_all_threshold', 'edit_own_threshold' ) ) );
+CPT_ensure_access_level( array( 'edit_all', 'edit_own' ) );
 
 plugin_require_api( 'core/helper.php' );
 form_security_validate( 'CPT_manage_text_new' );

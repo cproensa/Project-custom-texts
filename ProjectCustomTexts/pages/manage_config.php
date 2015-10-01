@@ -2,7 +2,7 @@
 //plugin_require_api( 'core/helper.php' );
 
 auth_reauthenticate( );
-access_ensure_project_level( CPT_threshold( array( 'manage_allprojects_threshold', 'manage_project_threshold' ) ) );
+CPT_ensure_access_level( array( 'manage_allprojects', 'manage_project' ) );
 
 html_page_top( plugin_lang_get( 'manage_config_title' ) );
 print_manage_menu();
@@ -17,7 +17,7 @@ CPT_print_menu( $t_this_page );
  */
 $s['formaction'] = plugin_page( 'manage_config_update' );
 $s['token'] = form_security_field( 'CPT_manage_config_update' );
-if( access_has_project_level( CPT_threshold( 'manage_allprojects_threshold' ), ALL_PROJECTS ) ) {
+if( CPT_access_has_level( 'manage_allprojects' ) ) {
 	$t_active = plugin_config_get( 'enable_allpr', FALSE, null, ALL_USERS, ALL_PROJECTS );
 	$chk = $t_active ? 'checked="checked"' : '';
 	$s[1]['check'] = '<input type="checkbox" name="enable_allpr" ' . $chk . ' />';
@@ -44,7 +44,7 @@ $s[2]['header'][4] = plugin_lang_get( 'predefined_text' );
 $s[2]['header'][5] = plugin_lang_get( 'delete_selection' );
 
 #get projects
-$t_manage_project_threshold = CPT_threshold( array( 'manage_allprojects_threshold', 'manage_project_threshold' ) );
+$t_manage_all = CPT_access_has_level( 'manage_allprojects' );
 $t_projects = user_get_accessible_projects( auth_get_current_user_id(), true );
 $t_full_projects = array();
 foreach( $t_projects as $t_project_id ) {
@@ -65,7 +65,7 @@ while( 0 < count( $t_stack ) ) {
 	# only print row if user has project management privileges
 	# and exists the configuration for that project
 	$t_configitem = @plugin_config_get( 'project', null, null, ALL_USERS, $t_project_id );
-	if( $t_configitem && !empty( $t_configitem ) && access_has_project_level( $t_manage_project_threshold, $t_project_id, auth_get_current_user_id() ) ) {
+	if( $t_configitem && !empty( $t_configitem ) && ( $t_manage_all || CPT_access_has_level('manage_project', $t_project_id ) ) ) {
 		$row[1] = str_repeat( '&raquo; ', $t_level ) . string_display( $t_project['name'] );
 		$row['hidden'] = '<input type="hidden" name="prid[]" value="' . $t_project_id . '" />';
 		$t_flag = $t_configitem['show_all'];

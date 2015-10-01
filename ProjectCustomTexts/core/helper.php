@@ -153,15 +153,13 @@ function CPT_get_subproject_option_list( $p_parent_id, $p_project_id = null, $p_
 	array_push( $p_parents, $p_parent_id );
 	$t_project_ids = current_user_get_accessible_subprojects( $p_parent_id );
 	project_cache_array_rows( $t_project_ids );
-	$t_project_count = count( $t_project_ids );
 	$s = '';
-	for( $i = 0;$i < $t_project_count;$i++ ) {
-		$t_full_id = $t_id = $t_project_ids[$i];
-		if( ( user_get_access_level( auth_get_current_user_id(), $t_id ) >= CPT_threshold( 'manage_project_threshold' ) )
+	foreach( $t_project_ids as $t_id ){
+		if( CPT_access_has_level('manage_project', $t_id)
 			&& ( null === @plugin_config_get( 'project', null, null, ALL_USERS, $t_id ) ) )
 		{
 			$s .= "<option value=\"";
-			$s .= $t_full_id . '"';
+			$s .= $t_id . '"';
 			$s .= '>' . str_repeat( '&#160;', count( $p_parents ) ) . str_repeat( '&raquo;', count( $p_parents ) ) . ' ' . string_attribute( project_get_field( $t_id, 'name' ) ) . '</option>' . "\n";
 		}
 		$s .= CPT_get_subproject_option_list( $t_id, $p_project_id, $p_parents );
@@ -176,10 +174,8 @@ function CPT_get_pending_project_list() {
 	$t_project_ids = current_user_get_accessible_projects();
 	project_cache_array_rows( $t_project_ids );
 	$s = '';
-	$t_project_count = count( $t_project_ids );
-	for( $i = 0;$i < $t_project_count;$i++ ) {
-		$t_id = $t_project_ids[$i];
-		if( ( user_get_access_level( auth_get_current_user_id(), $t_id ) >= CPT_threshold( 'manage_project_threshold' ) )
+	foreach( $t_project_ids as $t_id ){
+		if( CPT_access_has_level('manage_project', $t_id)
 			&& ( null === @plugin_config_get( 'project', null, null, ALL_USERS, $t_id ) ) )
 		{
 			$s.= '<option value="' . $t_id . '"';
@@ -197,16 +193,16 @@ function CPT_get_pending_project_list() {
  */
 function CPT_print_menu( $p_page = '' ) {
 	$t_pages = array(
-			'manage_config' => CPT_threshold( array( 'manage_allprojects_threshold', 'manage_project_threshold' ) ),
-			'manage_text' => CPT_threshold( array( 'edit_all_threshold', 'edit_own_threshold' ) ),
-			'manage_preferences' => config_get( 'manage_plugin_threshold' )
+			'manage_config' => CPT_access_has_level( array( 'manage_allprojects', 'manage_project' ) ),
+			'manage_text' => CPT_access_has_level( array( 'edit_all', 'edit_own' ) ),
+			'manage_preferences' => CPT_access_has_level( 'manage_configuration' )
 	);
 
-	$t_min = min( plugin_config_get( 'access_level', config_get( 'manage_plugin_threshold' ), FALSE, ALL_USERS, ALL_PROJECTS ) );
-	if( access_has_project_level( $t_min ) ) {
+	$t_any = $t_pages['manage_config'] || $t_pages['manage_text'] || $t_pages['manage_preferences'];
+	if( $t_any ) {
 			echo '<div align="center"><p>';
-			foreach( $t_pages as $t_page_name => $t_access_level ) {
-				if( access_has_project_level( $t_access_level ) ) {
+			foreach( $t_pages as $t_page_name => $t_access_has_level ) {
+				if( $t_access_has_level ) {
 					$title = plugin_lang_get( $t_page_name.'_title' );
 					$t_page = ( ( $p_page !== $t_page_name ) ? plugin_page( $t_page_name ) : NULL );
 					print_bracket_link( $t_page, $title );
@@ -229,12 +225,51 @@ function CPT_get_defaults () {
 	    'project' => null,
 	    'CPT_texts' => array(),
 	    'access_level' => array (
-				'manage_allprojects_threshold' => $t_manage_plugin_threshold,
-				'manage_project_threshold' => $t_manage_plugin_threshold,
-				'edit_all_threshold' => $t_manage_plugin_threshold,
-				'edit_own_threshold' => $t_manage_plugin_threshold
+				'manage_allprojects' => $t_manage_plugin_threshold,
+				'manage_project' => $t_manage_plugin_threshold,
+				'edit_all' => $t_manage_plugin_threshold,
+				'edit_own' => $t_manage_plugin_threshold,
+				'manage_configuration' => $t_manage_plugin_threshold
 				)
     );
+}
+
+function CPT_ensure_access_level( $p_perm, $p_project_id =  null, $p_user_id = null ) {
+	if( !CPT_access_has_level( $p_perm, $p_project_id, $p_user_id ) ) {
+		access_denied();
+	}
+}
+
+function CPT_access_has_level( $p_perm, $p_project_id = null, $p_user_id = null) {
+	if( !is_array( $p_perm ) ){
+		$t_perms= array( $p_perm );
+	}
+	else {
+		$t_perms = $p_perm;
+	}
+	$t_access = FALSE;
+	foreach( $t_perms as $t_p ){
+		$t_access = $t_access || CPT_access_level( $t_p, $p_project_id, $p_user_id );
+	}
+	return $t_access;
+}
+
+function CPT_access_level( $p_perm, $p_project_id = null, $p_user_id = null) {
+	$t_default = CPT_get_defaults()['access_level'];
+	$t_access = plugin_config_get( 'access_level', $t_default , FALSE, ALL_USERS, ALL_PROJECTS );
+	switch ($p_perm) {
+		case 'manage_allprojects':
+		case 'edit_all':
+		case 'manage_configuration':
+			return access_has_global_level( $t_access[$p_perm], $p_user_id );
+			break;
+		case 'manage_project':
+		case 'edit_own':
+			return access_has_project_level($t_access[$p_perm], $p_project_id, $p_user_id );
+			break;
+		default:
+			return FALSE;
+	}
 }
 
 /**
@@ -243,12 +278,14 @@ function CPT_get_defaults () {
  * @param string|array $t_perm
  * @return type
  */
-function CPT_threshold( $t_perm ) {
-	$t_default = CPT_get_defaults()['access_level'];
-	$t_access = plugin_config_get( 'access_level', $t_default , FALSE, ALL_USERS, ALL_PROJECTS );
-	if( is_array( $t_perm ) ) {
+/*
+function CPT_threshold( $p_perm ) {
+	$t_default = CPT_get_defaults();
+	$t_default_access = $t_default['access_level'];
+	$t_access = plugin_config_get( 'access_level', $t_default_access , FALSE, ALL_USERS, ALL_PROJECTS );
+	if( is_array( $p_perm ) ) {
 		$t_min = config_get( 'manage_plugin_threshold' );
-		foreach( $t_perm as $t_p ) {
+		foreach( $p_perm as $t_p ) {
 			$tmp = (int)( $t_access[$t_p] );
 			$t_min = min( $t_min, (int)( $t_access[$t_p] ) );
 		}
@@ -258,6 +295,7 @@ function CPT_threshold( $t_perm ) {
 		return $t_access[$t_perm];
 	}
 }
+*/
 
 function CPT_print_enum_string_option_list( $p_enum_name, $p_val ){
     ob_start();

@@ -2,7 +2,7 @@
 //plugin_require_api( 'core/helper.php' );
 
 auth_reauthenticate( );
-access_ensure_global_level( config_get( 'manage_plugin_threshold' ) );
+CPT_ensure_access_level('manage_configuration');
 
 html_page_top( plugin_lang_get( 'manage_preferences_title' ) );
 print_manage_menu();
@@ -19,20 +19,24 @@ $t_token_field = form_security_field( 'CPT_manage_preferences_update' );
 $scr['form1']['action'] = plugin_page( 'manage_preferences_update' );
 $scr['form1']['legend'] = plugin_lang_get( 'permissions_config' );
 $scr['form1']['fields'][1]['label'] = plugin_lang_get( 'configure_all_projects' );
+$scr['form1']['fields'][1]['alt'] = plugin_lang_get( 'global_access_level' );
 $scr['form1']['fields'][1]['input'] =  '<select name="access_allpr">'
-									. CPT_print_enum_string_option_list( 'access_levels', $t_access['manage_allprojects_threshold'] )
+									. CPT_print_enum_string_option_list( 'access_levels', $t_access['manage_allprojects'] )
 									. '</select>';
 $scr['form1']['fields'][2]['label'] = plugin_lang_get( 'configure_own_projects' );
+$scr['form1']['fields'][2]['alt'] = plugin_lang_get( 'project_access_level' );
 $scr['form1']['fields'][2]['input'] = '<select name="access_pr">'
-									. CPT_print_enum_string_option_list( 'access_levels', $t_access['manage_project_threshold'] )
+									. CPT_print_enum_string_option_list( 'access_levels', $t_access['manage_project'] )
 									. '</select>';
 $scr['form1']['fields'][3]['label'] = plugin_lang_get( 'edit_all_texts' );
+$scr['form1']['fields'][3]['alt'] = plugin_lang_get( 'global_access_level' );
 $scr['form1']['fields'][3]['input'] = '<select name="access_alltxt">'
-									. CPT_print_enum_string_option_list( 'access_levels', $t_access['edit_all_threshold'] )
+									. CPT_print_enum_string_option_list( 'access_levels', $t_access['edit_all'] )
 									. '</select>';
 $scr['form1']['fields'][4]['label'] = plugin_lang_get( 'edit_own_texts' );
+$scr['form1']['fields'][4]['alt'] = plugin_lang_get( 'project_access_level' );
 $scr['form1']['fields'][4]['input'] = '<select name="access_owntxt">'
-									. CPT_print_enum_string_option_list( 'access_levels', $t_access['edit_own_threshold'] )
+									. CPT_print_enum_string_option_list( 'access_levels', $t_access['edit_own'] )
 									. '</select>';
 $scr['form1']['submit'] = '<input type="submit" name="btn_upd" class="button" name="btn_update" value="' . plugin_lang_get( 'update_button' ) . '" />';
 
@@ -69,6 +73,7 @@ if( '1.2' === GET_VER ) {
 				</td>
 				<td width="70%">
 					<?php echo $field['input']; ?>
+					<span class="small">(<?php echo $field['alt']; ?>)</span>
 				</td>
 			</tr>
 			<?php } ?>
@@ -129,6 +134,7 @@ else {
 				</label>
 				<span class="input">
 					<?php echo $field['input']; ?>
+					<span class="small">(<?php echo $field['alt']; ?>)</span>
 				</span>
 				<span class="label-style"></span>
 			</div>

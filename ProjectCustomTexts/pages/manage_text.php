@@ -2,7 +2,7 @@
 //plugin_require_api( 'core/helper.php' );
 
 auth_reauthenticate( );
-access_ensure_project_level( CPT_threshold( array( 'edit_all_threshold', 'edit_own_threshold' ) ) );
+CPT_ensure_access_level( array( 'edit_all', 'edit_own' ) );
 
 html_page_top( plugin_lang_get( 'manage_text_title' ) );
 print_manage_menu();
@@ -29,6 +29,7 @@ $t_label_edit = plugin_lang_get( 'edit' );
 $t_page_delete = plugin_page( 'manage_text_delete' );
 $t_label_delete =  plugin_lang_get( 'delete_button' ) ;
 $t_token_delete = form_security_token( 'CPT_manage_text_delete' );
+$t_current_user = auth_get_current_user_id();
 $scr['row'] = array();
 foreach ($t_all as $t_item ) {
 	$t_obj = new CPT_Text( $t_item );
@@ -38,8 +39,8 @@ foreach ($t_all as $t_item ) {
 	$t_row[3] = implode( ', ', $t_obj->get_langs() );
 	$t_row[4] = user_get_name( $t_obj->user );
 	$t_row[5] = '';
-		if( access_has_global_level( CPT_threshold( 'edit_all_threshold', ALL_PROJECTS ) )
-				|| ( access_has_project_level( CPT_threshold( 'edit_own_threshold' ) ) && $t_obj->user == auth_get_current_user_id() )
+		if( CPT_access_has_level( 'edit_all' )
+				|| ( CPT_access_has_level( 'edit_own' ) && $t_obj->user == $t_current_user )
 			) {
 				$t_row[5] .= CPT_print_button( $t_page_edit, $t_label_edit, array( 'txt_name' => $t_obj->name), OFF);
 				$t_row[5] .= CPT_print_button( $t_page_delete, $t_label_delete, array( 'txt_name' => $t_obj->name, 'CPT_manage_text_delete_token' => $t_token_delete ), OFF);

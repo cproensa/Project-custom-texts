@@ -1,9 +1,10 @@
 <?php
 //plugin_require_api( 'core/helper.php' );
-
-access_ensure_project_level( CPT_threshold( array( 'edit_all_threshold', 'edit_own_threshold' ) ) );
+auth_reauthenticate( );
+CPT_ensure_access_level( array( 'edit_all', 'edit_own' ) );
 form_security_validate( 'CPT_manage_text_edit_update' );
 
+//@TODO check permissions
 $t_action = '';
 if( null != gpc_get( 'btn_upd', null ) ){
 	$t_action = 'UPDATE';
