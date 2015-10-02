@@ -18,7 +18,7 @@ $t_lang_fallback = config_get( 'fallback_language' );
  * prepare screen elements
  */
 
-$scr['legend'] = 'VIEW PREDEFINED TEXT';
+$scr['legend'] = plugin_lang_get( 'show_custom' );
 $scr['name_label'] = plugin_lang_get( 'name' );
 $scr['name'] = $t_obj->name;
 $scr['user_label'] = plugin_lang_get( 'created_by' );

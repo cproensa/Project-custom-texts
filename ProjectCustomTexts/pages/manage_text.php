@@ -61,40 +61,42 @@ $scr['add']['token'] = form_security_field( 'CPT_manage_text_new' );
 if( '1.2' === GET_VER ) {
 ?>
 
-<table class="width100" cellspacing="1">
-	<tr>
-		<td class="form-title" colspan="5">
-			<?php echo $scr['legend']; ?>
-		</td>
-	</tr>
-	<tr class="row-category">
-		<td width="20%"><?php echo $scr['head'][1]; ?></td>
-		<td width="40%"><?php echo $scr['head'][2]; ?></td>
-		<td width="20%"><?php echo $scr['head'][3]; ?></td>
-		<td width="10%"><?php echo $scr['head'][4]; ?></td>
-		<td width="10%"><?php echo $scr['head'][5]; ?></td>
-	</tr>
-	<?php foreach( $scr['row'] as $row ){ ?>
-		<tr <?php echo helper_alternate_class() ?>>
-			<td width="20%" class="center"><strong><?php echo $row[1]; ?></strong></td>
-			<td width="40%"><?php echo $row[2]; ?></td>
-			<td width="20%" class="center"><?php echo $row[3]; ?></td>
-			<td width="10%" class="center"><?php echo $row[4]; ?></td>
-			<td width="10%"><?php echo $row[5]; ?></td>
+<div align="center">
+	<table class="width75" cellspacing="1">
+		<tr>
+			<td class="form-title" colspan="5">
+				<?php echo $scr['legend']; ?>
+			</td>
 		</tr>
-	<?php } ?>
-	<tr>
-		<td colspan="5">
-			<form method="post" action="<?php echo $scr['add']['action']; ?>" >
-				<?php
-					echo $scr['add']['input'];
-					echo $scr['add']['submit'];
-					echo $scr['add']['token'];
-				?>
-			</form>
-		</td>
-	</tr>
-</table>
+		<tr class="row-category">
+			<td width="20%"><?php echo $scr['head'][1]; ?></td>
+			<td width="40%"><?php echo $scr['head'][2]; ?></td>
+			<td width="20%"><?php echo $scr['head'][3]; ?></td>
+			<td width="10%"><?php echo $scr['head'][4]; ?></td>
+			<td width="10%"><?php echo $scr['head'][5]; ?></td>
+		</tr>
+		<?php foreach( $scr['row'] as $row ){ ?>
+			<tr <?php echo helper_alternate_class() ?>>
+				<td width="20%" class="center"><strong><?php echo $row[1]; ?></strong></td>
+				<td width="40%"><?php echo $row[2]; ?></td>
+				<td width="20%" class="center"><?php echo $row[3]; ?></td>
+				<td width="10%" class="center"><?php echo $row[4]; ?></td>
+				<td width="10%"><?php echo $row[5]; ?></td>
+			</tr>
+		<?php } ?>
+		<tr>
+			<td colspan="5">
+				<form method="post" action="<?php echo $scr['add']['action']; ?>" >
+					<?php
+						echo $scr['add']['input'];
+						echo $scr['add']['submit'];
+						echo $scr['add']['token'];
+					?>
+				</form>
+			</td>
+		</tr>
+	</table>
+</div>
 
 
 <?php
