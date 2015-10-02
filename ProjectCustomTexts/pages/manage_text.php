@@ -41,8 +41,8 @@ foreach ($t_all as $t_item ) {
 	$t_row[4] = user_get_name( $t_obj->user );
 	$t_row[5] = '';
 		if( CPT_access_has_level( 'edit_all' ) || ( CPT_access_has_level( 'edit_own' ) && $t_obj->user == $t_current_user ) ) {
-				$t_row[5] .= CPT_print_button( $t_page_edit, $t_label_edit, array( 'txt_name' => $t_obj->name), OFF);
-				$t_row[5] .= CPT_print_button( $t_page_delete, $t_label_delete, array( 'txt_name' => $t_obj->name, 'CPT_manage_text_delete_token' => $t_token_delete ), OFF);
+				$t_row[5] .= CPT_get_button( $t_page_edit, $t_label_edit, array( 'txt_name' => $t_obj->name), OFF);
+				$t_row[5] .= CPT_get_button( $t_page_delete, $t_label_delete, array( 'txt_name' => $t_obj->name, 'CPT_manage_text_delete_token' => $t_token_delete ), OFF);
 			}
 	$scr['row'][] = $t_row;
 }

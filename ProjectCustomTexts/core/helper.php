@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Class to encapsulate a TExt object
+ * Class to encapsulate a Text object
  */
-
 class CPT_Text {
 	/**
 	 * @var string
@@ -168,7 +167,7 @@ function CPT_get_subproject_option_list( $p_parent_id, $p_project_id = null, $p_
 }
 
 /**
- * Prints option list for accessible projects, those still unconfigured
+ * Prints option list for accessible projects, those projects still unconfigured
  */
 function CPT_get_pending_project_list() {
 	$t_project_ids = current_user_get_accessible_projects();
@@ -186,6 +185,11 @@ function CPT_get_pending_project_list() {
 	return $s;
 }
 
+/**
+ * Gets a plugin page that is accesible by the user current access level
+ * to avoid linking to a restricted page when user has limited access
+ * @return string Name of the page selected
+ */
 function CPT_get_first_accesible_page() {
 	$t_pages = CPT_get_menu_pages();
 	foreach( $t_pages as $t_page_name => $t_access_has_level) {
@@ -196,6 +200,10 @@ function CPT_get_first_accesible_page() {
 	return null;
 }
 
+/**
+ * Defines pages listed as menu entries, with required access checks
+ * @return array Array of page=>(bool)has_acess_level
+ */
 function CPT_get_menu_pages() {
 	return array(
 			'manage_config' => CPT_access_has_level( array( 'manage_allprojects', 'manage_project' ) ),
@@ -227,7 +235,7 @@ function CPT_print_menu( $p_page = '' ) {
 
 /**
  * get defaults for plugin initialization
- * @return type
+ * @return array Configuration array for default values
  */
 function CPT_get_defaults () {
     $t_manage_plugin_threshold = config_get( 'manage_plugin_threshold', null, ALL_USERS, ALL_PROJECTS);
@@ -247,12 +255,27 @@ function CPT_get_defaults () {
     );
 }
 
+/**
+ * Check access level against one or any of several authorization string keys
+ * If access level is not satisfied at least by une key, deny access and show error
+ * @param string|array $p_perm
+ * @param integer $p_project_id Project id if (if applicable)
+ * @param integer $p_user_id User id if (if applicable)
+ */
 function CPT_ensure_access_level( $p_perm, $p_project_id =  null, $p_user_id = null ) {
 	if( !CPT_access_has_level( $p_perm, $p_project_id, $p_user_id ) ) {
 		access_denied();
 	}
 }
 
+/**
+ * Checks access level against one or more access string keys for this plugin
+ * string keys are those defined in configuration array
+ * @param string|array $p_perm Single or array of authorization string keys
+ * @param integer $p_project_id Project id if (if applicable)
+ * @param integer $p_user_id User id if (if applicable)
+ * @return type
+ */
 function CPT_access_has_level( $p_perm, $p_project_id = null, $p_user_id = null) {
 	if( !is_array( $p_perm ) ){
 		$t_perms= array( $p_perm );
@@ -267,6 +290,14 @@ function CPT_access_has_level( $p_perm, $p_project_id = null, $p_user_id = null)
 	return $t_access;
 }
 
+/**
+ * Checks access level against one access string key for this plugin
+ * string keys are those defined in configuration array
+ * @param string $p_perm String name for access key to check
+ * @param integer $p_project_id Project id if (if applicable)
+ * @param integer $p_user_id User id if (if applicable)
+ * @return boolean
+ */
 function CPT_access_level( $p_perm, $p_project_id = null, $p_user_id = null) {
 	$t_default = CPT_get_defaults()['access_level'];
 	$t_access = plugin_config_get( 'access_level', $t_default , FALSE, ALL_USERS, ALL_PROJECTS );
@@ -275,17 +306,21 @@ function CPT_access_level( $p_perm, $p_project_id = null, $p_user_id = null) {
 		case 'edit_all':
 		case 'manage_configuration':
 			return access_has_global_level( $t_access[$p_perm], $p_user_id );
-			break;
 		case 'manage_project':
 		case 'edit_own':
 			return access_has_project_level($t_access[$p_perm], $p_project_id, $p_user_id );
-			break;
 		default:
 			return FALSE;
 	}
 }
 
-function CPT_print_enum_string_option_list( $p_enum_name, $p_val ){
+/**
+ * Rewrite core function to get string instead of printing directly
+ * @param type $p_enum_name
+ * @param type $p_val
+ * @return type
+ */
+function CPT_get_enum_string_option_list( $p_enum_name, $p_val ){
     ob_start();
     print_enum_string_option_list( $p_enum_name, $p_val );
     $result = ob_get_contents();
@@ -293,7 +328,15 @@ function CPT_print_enum_string_option_list( $p_enum_name, $p_val ){
     return $result;
 }
 
-function CPT_print_button( $p_action_page, $p_label, $p_args_to_post, $p_security_token ){
+/**
+ * Rewrite core function to get string instead of printing directly
+ * @param type $p_action_page
+ * @param type $p_label
+ * @param type $p_args_to_post
+ * @param type $p_security_token
+ * @return type
+ */
+function CPT_get_button( $p_action_page, $p_label, $p_args_to_post, $p_security_token ){
     ob_start();
 	print_button( $p_action_page, $p_label, $p_args_to_post, $p_security_token );
     $result = ob_get_contents();

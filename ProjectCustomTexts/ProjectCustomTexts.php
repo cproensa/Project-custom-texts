@@ -1,21 +1,42 @@
 <?php
+# Copyright (c) 2015 Carlos Proensa
+
+# "Project Custom Texts" for MantisBT is free software:
+# you can redistribute it and/or modify it under the terms of the GNU
+# General Public License as published by the Free Software Foundation,
+# either version 2 of the License, or (at your option) any later version.
+#
+# "Project Custom Texts" plugin for MantisBT is distributed in the hope
+# that it will be useful, but WITHOUT ANY WARRANTY; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Inline column configuration plugin for MantisBT.
+# If not, see <http://www.gnu.org/licenses/>.
 
 
+/*
+ * Get version of Mantis core, used for proper HTML output
+ */
 $t_version_core = substr(
 		MANTIS_VERSION,
 		0,
 		strpos( MANTIS_VERSION, '.', strpos( MANTIS_VERSION, '.' ) + 1 )
 	);
-
 if( $t_version_core === '1.3' ) define( 'GET_VER', '1.3');
 else if( $t_version_core === '1.2' ) define( 'GET_VER', '1.2');
 
 
+/*
+ * Compatibility functions
+ * Borrowed from "EmailReportingPlugin"
+ * Thanks @authors
+ */
 
 // Needed for MantisBT 1.2.x.
 // Not needed for MantisBT 1.3.x
 require_once( config_get( 'class_path' ) . 'MantisPlugin.class.php' );
-
 
 // New function in MantisBT 1.3.x
 // Included for compatibility with 1.2.x
@@ -34,8 +55,6 @@ if ( !function_exists( 'plugin_require_api' ) )
 		require_once( $t_path . $p_file );
 	}
 }
-
-
 
 // New function in MantisBT 1.3.x
 // Included for compatibility with 1.2.x
@@ -59,31 +78,25 @@ if ( !function_exists( 'require_api' ) )
 
 
 class ProjectCustomTextsPlugin extends MantisPlugin {
-    /*
-        function init() {
-            plugin_require_api('core/helper.php');
-        }
-     * 
-     */
 
-        function register() {
-            plugin_require_api( 'core/helper.php' );
-                $this->name = 'ProjectCustomTexts';    # Proper name of plugin
-                $this->description = 'Manage Custom Texts for projects';    # Short description of the plugin
-                $this->page = 'manage_config';           # Default plugin page
-                $this->version = '1.1';     # Plugin version string
+	function register() {
+		plugin_require_api( 'core/helper.php' );
+			$this->name = 'ProjectCustomTexts';
+			$this->description = 'Manage Custom Texts for project bug reporting';
+			$this->page = 'manage_config';
+			$this->version = '1.0-beta.1';
 
-				if( '1.3' === GET_VER ) {
-					$this->requires = array( "MantisCore" => "1.3" );
-				}
-				else if( '1.2' === GET_VER ) {
-					$this->requires = array( "MantisCore" => "1.2" );
-				}
+			if( '1.3' === GET_VER ) {
+				$this->requires = array( "MantisCore" => "1.3" );
+			}
+			else if( '1.2' === GET_VER ) {
+				$this->requires = array( "MantisCore" => "1.2" );
+			}
 
-                $this->author = 'Carlos Proensa';         # Author/team name
-                $this->contact = '';        # Author/team e-mail address
-                $this->url = '';            # Support webpage
-        }
+			$this->author = 'Carlos Proensa';         # Author/team name
+			$this->contact = '';        # Author/team e-mail address
+			$this->url = 'https://github.com/cproensa/Project-custom-texts';
+	}
 
 
 	function config() {
@@ -97,7 +110,6 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 			'EVENT_MENU_FILTER' => 'CPT_get_manage_menu_alt',
 			'EVENT_REPORT_BUG_FORM_TOP' => 'reportBugFormTop'
 		);
-
 		return $hooks;
 	}
 
@@ -122,6 +134,11 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 		}
 }
 
+	/**
+	 * Print the defined texts in the bug report form
+	 * @param type $p_event
+	 * @param type $p_project_id
+	 */
 	function reportBugFormTop( $p_event, $p_project_id ) {
 		$t_enable_pr = plugin_config_get( 'enable_pr', FALSE, null, ALL_USERS, ALL_PROJECTS );
 		$t_enable_allpr = plugin_config_get( 'enable_allpr', FALSE, null, ALL_USERS, ALL_PROJECTS );

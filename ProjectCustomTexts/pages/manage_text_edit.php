@@ -39,7 +39,7 @@ $t_lang_unused = array_diff( $t_lang_available, array_keys( $t_obj->contents ), 
 /*
  * prepare screen elements
  */
-$scr['b_del'] = CPT_print_button( plugin_page( 'manage_text_delete' ), plugin_lang_get( 'delete_button' ) , array( 'txt_name' => $t_obj->name, 'CPT_manage_text_delete_token' => form_security_token( 'CPT_manage_text_delete' ) ), OFF );
+$scr['b_del'] = CPT_get_button( plugin_page( 'manage_text_delete' ), plugin_lang_get( 'delete_button' ) , array( 'txt_name' => $t_obj->name, 'CPT_manage_text_delete_token' => form_security_token( 'CPT_manage_text_delete' ) ), OFF );
 $scr['legend'] = plugin_lang_get( 'edit_predefined_text' );
 $scr['action'] = plugin_page( 'manage_text_edit_update' );
 $scr['token'] = form_security_field( 'CPT_manage_text_edit_update' );

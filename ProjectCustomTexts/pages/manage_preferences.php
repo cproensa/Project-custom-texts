@@ -21,22 +21,22 @@ $scr['form1']['legend'] = plugin_lang_get( 'permissions_config' );
 $scr['form1']['fields'][1]['label'] = plugin_lang_get( 'configure_all_projects' );
 $scr['form1']['fields'][1]['alt'] = plugin_lang_get( 'global_access_level' );
 $scr['form1']['fields'][1]['input'] =  '<select name="access_allpr">'
-									. CPT_print_enum_string_option_list( 'access_levels', $t_access['manage_allprojects'] )
+									. CPT_get_enum_string_option_list( 'access_levels', $t_access['manage_allprojects'] )
 									. '</select>';
 $scr['form1']['fields'][2]['label'] = plugin_lang_get( 'configure_own_projects' );
 $scr['form1']['fields'][2]['alt'] = plugin_lang_get( 'project_access_level' );
 $scr['form1']['fields'][2]['input'] = '<select name="access_pr">'
-									. CPT_print_enum_string_option_list( 'access_levels', $t_access['manage_project'] )
+									. CPT_get_enum_string_option_list( 'access_levels', $t_access['manage_project'] )
 									. '</select>';
 $scr['form1']['fields'][3]['label'] = plugin_lang_get( 'edit_all_texts' );
 $scr['form1']['fields'][3]['alt'] = plugin_lang_get( 'global_access_level' );
 $scr['form1']['fields'][3]['input'] = '<select name="access_alltxt">'
-									. CPT_print_enum_string_option_list( 'access_levels', $t_access['edit_all'] )
+									. CPT_get_enum_string_option_list( 'access_levels', $t_access['edit_all'] )
 									. '</select>';
 $scr['form1']['fields'][4]['label'] = plugin_lang_get( 'edit_own_texts' );
 $scr['form1']['fields'][4]['alt'] = plugin_lang_get( 'project_access_level' );
 $scr['form1']['fields'][4]['input'] = '<select name="access_owntxt">'
-									. CPT_print_enum_string_option_list( 'access_levels', $t_access['edit_own'] )
+									. CPT_get_enum_string_option_list( 'access_levels', $t_access['edit_own'] )
 									. '</select>';
 $scr['form1']['submit'] = '<input type="submit" name="btn_upd" class="button" name="btn_update" value="' . plugin_lang_get( 'update_button' ) . '" />';
 
