@@ -28,13 +28,16 @@ if( CPT_access_has_level( 'manage_allprojects' ) ) {
 	$t_configitem = plugin_config_get( 'project_all',array(), null, ALL_USERS, ALL_PROJECTS );
 	$s[1]['input'] = CPT_get_alltext_option_list( ALL_PROJECTS, TRUE, $t_configitem['txt_pred'] );
 	$s[1]['btn_upd'] = '<input type="submit" name="btn_upd" class="button" value="' . plugin_lang_get( 'update_button' ) . '" />';
-
 }
 
-$t_active = plugin_config_get( 'enable_pr', FALSE, null, ALL_USERS, ALL_PROJECTS);
-$chk = $t_active ? 'checked="checked"' : '';
-$s[2]['check'] = '<input type="checkbox" name="enable_pr" ' . $chk . ' />';
-$s[2]['checklabel']	= plugin_lang_get('enabled');
+$s[2]['check'] = '';
+$s[2]['checklabel'] = '';
+if( CPT_access_has_level( 'manage_allprojects' ) ) {
+	$t_active = plugin_config_get( 'enable_pr', FALSE, null, ALL_USERS, ALL_PROJECTS);
+	$chk = $t_active ? 'checked="checked"' : '';
+	$s[2]['check'] = '<input type="checkbox" name="enable_pr" ' . $chk . ' />';
+	$s[2]['checklabel']	= plugin_lang_get('enabled');
+}
 $s[2]['legend'] = plugin_lang_get( 'projects_config' );
 $s[2]['legendsub'] = lang_get( 'colour_project' );
 $s[2]['header'][1] = plugin_lang_get( 'project_name' );

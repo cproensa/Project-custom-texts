@@ -116,22 +116,13 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 	 * @return type
 	 */
 	function CPT_get_manage_menu( ) {
-//		$t_min = min(plugin_config_get( ('access_level'), config_get( 'manage_plugin_threshold' ), FALSE, ALL_USERS, ALL_PROJECTS ) );
-/*
-		$t_min = CPT_threshold( array( 'manage_allprojects_threshold', 'manage_project_threshold', 'edit_all_threshold', 'edit_own_threshold' ) );
-		if( access_has_project_level( $t_min ) ) {
-			return array( '<a href="' . plugin_page( 'manage_config' ) . '">' . plugin_lang_get( 'manage_CPT' ) . '</a>' );
+		$t_page = CPT_get_first_accesible_page();
+		if( $t_page ){
+			return array( '<a href="' . plugin_page( $t_page ) . '">' . plugin_lang_get( 'manage_CPT' ) . '</a>' );
 		}
-*/
-		$t_perm = array( 'manage_allprojects', 'manage_project', 'edit_all', 'edit_own' );
-		if( CPT_access_has_level( $t_perm ) ){
-			return array( '<a href="' . plugin_page( 'manage_config' ) . '">' . plugin_lang_get( 'manage_CPT' ) . '</a>' );
-		}
-	}
+}
 
 	function reportBugFormTop( $p_event, $p_project_id ) {
-		//global $g_active_language;
-
 		$t_enable_pr = plugin_config_get( 'enable_pr', FALSE, null, ALL_USERS, ALL_PROJECTS );
 		$t_enable_allpr = plugin_config_get( 'enable_allpr', FALSE, null, ALL_USERS, ALL_PROJECTS );
 		$t_pr_cfg = plugin_config_get( 'project', null, null, ALL_USERS, $p_project_id );

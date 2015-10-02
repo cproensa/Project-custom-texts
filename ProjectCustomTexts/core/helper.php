@@ -186,17 +186,30 @@ function CPT_get_pending_project_list() {
 	return $s;
 }
 
+function CPT_get_first_accesible_page() {
+	$t_pages = CPT_get_menu_pages();
+	foreach( $t_pages as $t_page_name => $t_access_has_level) {
+		if( $t_access_has_level ){
+			return $t_page_name;
+		}
+	}
+	return null;
+}
+
+function CPT_get_menu_pages() {
+	return array(
+			'manage_config' => CPT_access_has_level( array( 'manage_allprojects', 'manage_project' ) ),
+			'manage_text' => CPT_access_has_level( array( 'edit_all', 'edit_own' ) ),
+			'manage_preferences' => CPT_access_has_level( 'manage_configuration' )
+	);
+}
 
 /**
  * Print navigation menu
  * @param string $p_page Page where is called to not hyperlink
  */
 function CPT_print_menu( $p_page = '' ) {
-	$t_pages = array(
-			'manage_config' => CPT_access_has_level( array( 'manage_allprojects', 'manage_project' ) ),
-			'manage_text' => CPT_access_has_level( array( 'edit_all', 'edit_own' ) ),
-			'manage_preferences' => CPT_access_has_level( 'manage_configuration' )
-	);
+	$t_pages = CPT_get_menu_pages();
 
 	$t_any = $t_pages['manage_config'] || $t_pages['manage_text'] || $t_pages['manage_preferences'];
 	if( $t_any ) {
