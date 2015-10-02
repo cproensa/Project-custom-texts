@@ -100,7 +100,7 @@ if( '1.2' === GET_VER ) {
 		</tr>
 		<form method="post" action="<?php echo $scr['action']; ?>">
 		<?php echo $scr['token']; ?>
-			<tr <?php echo helper_alternate_class( 1 ) ?>>
+			<tr <?php echo helper_alternate_class() ?>>
 				<td class="category" width="30%">
 					<span class="required">*</span>
 					<?php echo $scr['fields'][1]['label']; ?>
@@ -109,7 +109,7 @@ if( '1.2' === GET_VER ) {
 					<?php echo $scr['fields'][1]['input']; ?>
 				</td>
 			</tr>
-			<tr <?php echo helper_alternate_class( 1 ) ?>>
+			<tr <?php echo helper_alternate_class() ?>>
 				<td class="category" width="30%">
 					<?php echo $scr['fields'][2]['label']; ?>
 				</td>
@@ -118,7 +118,7 @@ if( '1.2' === GET_VER ) {
 				</td>
 			</tr>
 			<?php foreach( $scr['txts'] as $txt ) { ?>
-				<tr <?php echo helper_alternate_class( 1 ) ?>>
+				<tr <?php echo helper_alternate_class() ?>>
 					<td class="category" width="30%">
 						<span><?php echo $txt['label']; ?></span><br>
 						<span><?php echo $txt['sub1']; ?></span><br>

@@ -139,11 +139,11 @@ else {
 		<?php foreach( $scr['contents'] as $t_content ) { ?>
 			<div class="spacer"></div>
 			<div class="field-container">
-					<label>
-						<span><?php echo $t_content['label'] ?>: </span>
-						<span><?php echo $t_content['sub1'] ?> </span>
-						<span class="small"><?php echo $t_content['sub2'] ?></span>
-					</label>
+				<label>
+					<span><?php echo $t_content['label'] ?>: </span>
+					<span><?php echo $t_content['sub1'] ?> </span>
+					<span class="small"><?php echo $t_content['sub2'] ?></span>
+				</label>
 			</div>
 			<div class="spacer"></div>
 			<div>

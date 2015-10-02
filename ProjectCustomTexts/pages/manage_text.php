@@ -75,7 +75,7 @@ if( '1.2' === GET_VER ) {
 		<td width="10%"><?php echo $scr['head'][5]; ?></td>
 	</tr>
 	<?php foreach( $scr['row'] as $row ){ ?>
-		<tr <?php echo helper_alternate_class( 1 ) ?>>
+		<tr <?php echo helper_alternate_class() ?>>
 			<td width="20%" class="center"><strong><?php echo $row[1]; ?></strong></td>
 			<td width="40%"><?php echo $row[2]; ?></td>
 			<td width="20%" class="center"><?php echo $row[3]; ?></td>

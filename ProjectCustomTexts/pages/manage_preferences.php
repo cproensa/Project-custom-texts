@@ -67,7 +67,7 @@ if( '1.2' === GET_VER ) {
 			</tr>
 
 			<?php foreach( $scr['form1']['fields'] as $field ){ ?>
-			<tr <?php echo helper_alternate_class( 1 ) ?>>
+			<tr <?php echo helper_alternate_class() ?>>
 				<td class="category" width="30%">
 					<?php echo $field['label']; ?>
 				</td>
@@ -96,7 +96,7 @@ if( '1.2' === GET_VER ) {
 				</td>
 			</tr>
 			<?php foreach( $scr['form2']['fields'] as $field ){ ?>
-			<tr <?php echo helper_alternate_class( 1 ) ?>>
+			<tr <?php echo helper_alternate_class() ?>>
 				<td width="30%">
 					<?php echo $field['button']; ?>
 				</td>

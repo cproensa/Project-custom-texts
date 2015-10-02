@@ -157,7 +157,7 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 			if( $t_obj ) {
 				# HTML for mantis 1.2
 				if( '1.2' === GET_VER ) {
-					echo '<tr class="' . helper_alternate_class( 1 ) . '"><td colspan="2">';
+					echo '<tr class="' . helper_alternate_class() . '"><td colspan="2">';
 					echo string_nl2br( $t_obj->get_localized_txt() );
 					echo '</td></tr>';
 				}
@@ -175,7 +175,7 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 			if( $t_obj ) {
 				# HTML for mantis 1.2
 				if( '1.2' === GET_VER ) {
-					echo '<tr class="' . helper_alternate_class( 1 ) . '"><td colspan="2">';
+					echo '<tr class="' . helper_alternate_class() . '"><td colspan="2">';
 					echo string_nl2br( $t_obj->get_localized_txt() );
 					echo '</td></tr>';
 				}

@@ -130,7 +130,7 @@ if( '1.2' === GET_VER ) {
 				<span><?php echo $s[1]['checklabel']; ?></span>
 			</td>
 		</tr>
-		<tr <?php echo helper_alternate_class( 1 ) ?>>
+		<tr <?php echo helper_alternate_class() ?>>
 			<td class="category right" width="30%">
 				<?php echo $s[1]['label']; ?>
 			</td>
@@ -168,7 +168,7 @@ if( '1.2' === GET_VER ) {
 			<td width="20%"><?php echo $s[2]['header'][5]; ?></td>
 		</tr>
 		<?php foreach( $s[2]['row'] as $row ) { ?>
-			<tr <?php echo helper_alternate_class( 1 ) ?>>
+			<tr <?php echo helper_alternate_class() ?>>
 				<?php echo $row['hidden']; ?>
 				<td width="20%"><?php echo $row[1]; ?></td>
 				<td width="20%"><?php echo $row[2]; ?></td>
@@ -198,7 +198,7 @@ if( '1.2' === GET_VER ) {
 				<?php echo $s[3]['legend']; ?>
 			</td>
 		</tr>
-		<tr <?php echo helper_alternate_class( 1 ) ?>>
+		<tr <?php echo helper_alternate_class() ?>>
 			<td class="category" width="30%">
 				<?php echo $s[3]['label']; ?>
 			</td>
