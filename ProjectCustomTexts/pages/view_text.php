@@ -27,7 +27,7 @@ $scr['descr_label'] = plugin_lang_get( 'description' );
 $scr['descr'] = $t_obj->description;
 
 $scr['b_edit'] = '';
-if( CPT_access_has_level( 'edit_all' ) || ( CPT_access_has_level( 'edit_own' ) && $t_obj->user == auth_get_current_user_id() ) ) { 
+if( CPT_access_has_level( 'edit_all' ) || ( CPT_access_has_level( 'edit_own' ) && $t_obj->user == auth_get_current_user_id() ) ) {
 	$scr['b_edit'] = CPT_print_button( plugin_page( 'manage_text_edit' ), plugin_lang_get( 'edit' ) , array( 'txt_name' => $t_obj->name), OFF );
 }
 
