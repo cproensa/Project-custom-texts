@@ -34,7 +34,8 @@ $scr['row'] = array();
 foreach ($t_all as $t_item ) {
 	$t_obj = new CPT_Text( $t_item );
 	$t_row = array();
-	$t_row[1] = $t_obj->name;
+	$t_view_link = plugin_page('view_text') . '&txt_name=' . string_url( $t_obj->name );
+	$t_row[1] = '<a href="' . $t_view_link .  '">' . $t_obj->name . '</a>';
 	$t_row[2] = $t_obj->description;
 	$t_row[3] = implode( ', ', $t_obj->get_langs() );
 	$t_row[4] = user_get_name( $t_obj->user );
