@@ -26,4 +26,3 @@ CPT_text_save( $t_textobj, ALL_PROJECTS );
 
 form_security_purge( 'CPT_manage_text_new' );
 print_successful_redirect( plugin_page( 'manage_text', true ) );
-?>

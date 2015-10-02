@@ -59,4 +59,3 @@ if( $t_action === 'UPDATE' ) {
 if( $t_action === 'ADDLANG' ) {
 	print_successful_redirect( plugin_page( 'manage_text_edit', true ) . '&txt_name='. string_url( $f_name ) );
 }
-?>

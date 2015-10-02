@@ -287,5 +287,3 @@ function CPT_print_button( $p_action_page, $p_label, $p_args_to_post, $p_securit
     ob_end_clean();
     return $result;
 }
-
-?>

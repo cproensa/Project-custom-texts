@@ -68,4 +68,3 @@ if( gpc_get( 'btn_del', null ) ) {
 
 form_security_purge( 'CPT_manage_config_update' );
 print_successful_redirect( plugin_page( 'manage_config', true ) );
-?>

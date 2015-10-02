@@ -23,4 +23,3 @@ else {
 
 form_security_purge( 'CPT_manage_text_delete' );
 print_successful_redirect( plugin_page( 'manage_text', true ) );
-

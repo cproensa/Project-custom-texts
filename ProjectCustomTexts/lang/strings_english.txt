@@ -51,6 +51,3 @@ $s_plugin_ProjectCustomTexts_reset_default_permissions = 'Reset permissions';
 $s_plugin_ProjectCustomTexts_reset_default_permissions_txt = 'Reset permission configuration to the default settings';
 $s_plugin_ProjectCustomTexts_delete_all_configuration = 'Delete all configuration';
 $s_plugin_ProjectCustomTexts_delete_all_configuration_txt = 'Deletes all configurations on permissions, projects and texts';
-
-
-?>

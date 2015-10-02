@@ -41,4 +41,3 @@ if( null != gpc_get( 'btn_delete', null ) ){
 
 form_security_purge( 'CPT_manage_preferences_update' );
 print_successful_redirect( plugin_page( 'manage_preferences', true ) );
-?>
