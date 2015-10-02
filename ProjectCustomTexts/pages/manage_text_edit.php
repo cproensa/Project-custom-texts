@@ -7,6 +7,7 @@ CPT_ensure_access_level( array( 'edit_all', 'edit_own' ) );
 //form_security_validate( 'CPT_manage_text_edit' );
 html_page_top( plugin_lang_get( 'manage_text_edit_title' ) );
 print_manage_menu();
+
 CPT_print_menu();
 
 $f_name = gpc_get( 'txt_name' );

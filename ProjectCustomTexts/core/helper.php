@@ -219,8 +219,8 @@ function CPT_get_menu_pages() {
 function CPT_print_menu( $p_page = '' ) {
 	$t_pages = CPT_get_menu_pages();
 
-	$t_any = $t_pages['manage_config'] || $t_pages['manage_text'] || $t_pages['manage_preferences'];
-	if( $t_any ) {
+	# Apply boolean OR for all page access before printing any tag
+	if( array_reduce( $t_pages, function( $a, $b ){ return $a || $b; }, false ) ) {
 			echo '<div align="center"><p>';
 			foreach( $t_pages as $t_page_name => $t_access_has_level ) {
 				if( $t_access_has_level ) {
