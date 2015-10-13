@@ -147,7 +147,7 @@ function CPT_text_save( CPT_Text $t ) {
 /**
  * Recursive helper for project option list
  */
-function CPT_get_subproject_option_list( $p_parent_id, $p_project_id = null, $p_parents = Array() ) {
+function CPT_get_subproject_option_list( $p_parent_id, $p_parents = Array() ) {
 	if( null === $p_parents ) $p_parents = Array();
 	array_push( $p_parents, $p_parent_id );
 	$t_project_ids = current_user_get_accessible_subprojects( $p_parent_id );
@@ -161,7 +161,7 @@ function CPT_get_subproject_option_list( $p_parent_id, $p_project_id = null, $p_
 			$s .= $t_id . '"';
 			$s .= '>' . str_repeat( '&#160;', count( $p_parents ) ) . str_repeat( '&raquo;', count( $p_parents ) ) . ' ' . string_attribute( project_get_field( $t_id, 'name' ) ) . '</option>' . "\n";
 		}
-		$s .= CPT_get_subproject_option_list( $t_id, $p_project_id, $p_parents );
+		$s .= CPT_get_subproject_option_list( $t_id, $p_parents );
 	}
 	return $s;
 }
@@ -180,7 +180,7 @@ function CPT_get_pending_project_list() {
 			$s.= '<option value="' . $t_id . '"';
 			$s.= '>' . string_attribute( project_get_field( $t_id, 'name' ) ) . '</option>' . "\n";
 		}
-		$s.= CPT_get_subproject_option_list( $t_id, $p_project_id, $p_filter_project_id, $p_trace, Array() );
+		$s.= CPT_get_subproject_option_list( $t_id, Array() );
 	}
 	return $s;
 }
