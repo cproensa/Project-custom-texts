@@ -198,5 +198,3 @@ class ProjectCustomTextsPlugin extends MantisPlugin {
 	}
 }        
         
-?>        
-        
