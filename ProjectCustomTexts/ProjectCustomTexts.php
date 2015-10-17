@@ -19,13 +19,15 @@
 /*
  * Get version of Mantis core, used for proper HTML output
  */
-$t_version_core = substr(
+if( !defined( 'GET_VER') ) {
+	$t_version_core = substr(
 		MANTIS_VERSION,
 		0,
 		strpos( MANTIS_VERSION, '.', strpos( MANTIS_VERSION, '.' ) + 1 )
-	);
-if( $t_version_core === '1.3' ) define( 'GET_VER', '1.3');
-else if( $t_version_core === '1.2' ) define( 'GET_VER', '1.2');
+		);
+	if( $t_version_core === '1.3' ) define( 'GET_VER', '1.3');
+	else if( $t_version_core === '1.2' ) define( 'GET_VER', '1.2');
+}
 
 
 /*
